@@ -1,5 +1,5 @@
-import maldives from "../assets/images/maldives-island.jpg";
 import { useNavigate } from "react-router-dom";
+import HomeImageCarousel from "./HomeImageCarousel";
 
 export default function HomeHero() {
   const navigate = useNavigate();
@@ -43,11 +43,7 @@ export default function HomeHero() {
           </div>
         </div>
         <div className="relative lg:col-span-5 lg:-mr-8 xl:absolute xl:inset-0 xl:left-1/2 xl:mr-0">
-          <img
-            alt="maldives"
-            src={maldives}
-            className="h-full w-full bg-gray-50 object-cover lg:absolute rounded-tl-[10px] shadow-lg"
-          />
+          <HomeImageCarousel />
         </div>
       </div>
     </div>
