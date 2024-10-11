@@ -7,7 +7,6 @@ export default function HomeImageCarousel() {
   const images = [maldives, ski, nyc];
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Automatically change slide every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       goToNextSlide();
@@ -28,9 +27,9 @@ export default function HomeImageCarousel() {
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
         {images.map((image, index) => (
-          <div key={index} className="w-full flex-shrink-0">
+          <div key={index} className="w-full flex-shrink-0 shadow-2xl">
             <img
-              className="h-full object-cover"
+              className="h-full object-cover opacity-95"
               src={image}
               alt={`Slide ${index + 1}`}
             />
