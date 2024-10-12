@@ -1,19 +1,3 @@
-interface HotelBooking {
-  hotelName: string;
-  bookingID: string;
-  price: number;
-  checkInDate: string;
-  checkOutDate: string;
-  guests: number;
-  rooms: number;
-}
-
-interface Accommodations {
-  hotels: HotelBooking[];
-  totalCost: number;
-  accommodationType: AccommodationType;
-}
-
 export enum AccommodationType {
   Family = "family",
   Friends = "friends",
@@ -30,32 +14,25 @@ export enum VacationTypes {
   Winter = "winter",
 }
 
+export enum HotelType {
+  Luxury = "luxury",
+  Boutique = "boutique",
+  Resort = "resort",
+  Standard = "standard",
+  Camping = "camping",
+}
+
+export interface Accommodation {
+  accommodationType: AccommodationType;
+  hotelType: HotelType;
+}
+
 export default interface VacationPlan {
   destination: string;
   startDate: string;
   endDate: string;
   vacationType: string;
   budget: number;
-  accommodations: Accommodations;
+  accommodation: Accommodation;
   activities: string[];
-}
-
-interface CarRental {
-  carRentalCompany: string;
-  rentalID: string;
-  carType: string;
-  price: number;
-  pickUpDate: string;
-  dropOffDate: string;
-}
-
-// Interface for Flight Booking Details
-interface FlightBooking {
-  airline: string;
-  flightID: string;
-  departureDate: string;
-  returnDate: string;
-  passengers: number;
-  cabinClass: string;
-  price: number;
 }

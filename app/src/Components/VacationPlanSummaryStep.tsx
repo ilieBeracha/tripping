@@ -28,7 +28,11 @@ export default function VacationPlanSummaryStep() {
         </p>
         <p className="text-lg">
           <span className="font-semibold">Accommodation Type: </span>
-          {vacationPlan.accommodations.accommodationType}
+          {vacationPlan.accommodation.accommodationType}
+        </p>
+        <p className="text-lg">
+          <span className="font-semibold">Hotel Type: </span>
+          {vacationPlan.accommodation.hotelType}
         </p>
       </div>
     </div>

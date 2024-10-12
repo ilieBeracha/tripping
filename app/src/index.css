@@ -66,3 +66,47 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+
+/* Datepicker Custom Styling */
+.custom-datepicker .react-datepicker {
+  border: none;
+  box-shadow: none;
+}
+
+.custom-datepicker .react-datepicker__day--selected {
+  background-color: #ff7a59; /* main-orange color */
+  color: white;
+  border-radius: 50%;
+}
+
+.custom-datepicker .react-datepicker__day:hover {
+  background-color: #ff956e; /* hover effect */
+  border-radius: 50%;
+}
+
+.custom-datepicker .react-datepicker__header {
+  background-color: #fff;
+  border-bottom: none;
+}
+
+.custom-datepicker .react-datepicker__current-month {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #2d3748; /* sec-blue */
+}
+
+.custom-datepicker .react-datepicker__day-name {
+  color: #4a5568;
+  font-weight: bold;
+}
+
+.custom-datepicker .react-datepicker__day--today {
+  border: 1px solid #ff7a59; /* Highlight today's date */
+  border-radius: 50%;
+}
+
+.custom-datepicker .react-datepicker__day--keyboard-selected {
+  background-color: #ff7a59; /* Highlight selected day */
+  color: white;
+}

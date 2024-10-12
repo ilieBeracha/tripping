@@ -6,15 +6,21 @@ import VacationPlanDatesStep from "./VacationPlanDatesStep";
 import VacationPlanAccommodationsStep from "./VacationPlanAccommodationsStep";
 import VacationPlanSummaryStep from "./VacationPlanSummaryStep";
 import { ChevronRight, ChevronLeft } from "lucide-react";
+import { useStore } from "zustand";
+import { vacationPlanStore } from "../stores/VacationPlanStore";
 
 export default function VacationPlanForm() {
   const [currentStep, setCurrentStep] = useState(1);
+  const store = useStore(vacationPlanStore);
 
   const steps = ["Destination", "Accommodations", "Dates", "Summary"];
 
   const handleNext = () => {
     if (currentStep < steps.length) {
       setCurrentStep(currentStep + 1);
+    } else {
+      console.log("Vacation Plan Submitted");
+      console.log(store.vacationPlan);
     }
   };
 
