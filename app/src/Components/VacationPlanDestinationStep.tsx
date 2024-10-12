@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import IconSelect from "./IconSelect";
 import { VacationTypes } from "../types/vacationPlan";
+import SelectSearch from "./SelectSearch";
 
 export default function VacationPlanDestinationStep() {
   const useVacationPlanStore = useStore(vacationPlanStore);
@@ -46,14 +47,12 @@ export default function VacationPlanDestinationStep() {
         <label className="block text-lg font-medium text-gray-700">
           Specific Destination (optional)
         </label>
-        <input
-          type="text"
-          disabled={useVacationPlanStore.vacationPlan.vacationType !== ""}
-          placeholder="Enter destination"
-          className={inputStyle}
-          value={vacationPlan.destination}
-          onChange={(e) => useVacationPlanStore.setDestination(e.target.value)}
-        />
+        <SelectSearch
+          inputStyle={inputStyle}
+          onSelect={(country: any) =>
+            useVacationPlanStore.setDestination(country)
+          }
+        />{" "}
       </div>
       <div className="space-y-4">
         <label className="block text-lg font-medium text-gray-700">
