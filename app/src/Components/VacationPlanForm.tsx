@@ -4,6 +4,7 @@ import VacationPlanStepper from "./VacationPlanStepper";
 import VacationPlanDestinationStep from "./VacationPlanDestinationStep";
 import VacationPlanDatesStep from "./VacationPlanDatesStep";
 import VacationPlanAccommodationsStep from "./VacationPlanAccommodationsStep";
+import VacationPlanBudgetStep from "./VacationPlanBudgetStep";
 import VacationPlanSummaryStep from "./VacationPlanSummaryStep";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import { useStore } from "zustand";
@@ -13,7 +14,7 @@ export default function VacationPlanForm() {
   const [currentStep, setCurrentStep] = useState(1);
   const store = useStore(vacationPlanStore);
 
-  const steps = ["Destination", "Accommodations", "Dates", "Summary"];
+  const steps = ["Destination", "Accommodations", "Dates", "Budget", "Summary"];
 
   const handleNext = () => {
     if (currentStep < steps.length) {
@@ -38,8 +39,8 @@ export default function VacationPlanForm() {
 
   return (
     <div
-      className="w-full mx-auto flex flex-col"
-      style={{ maxWidth: "100%", height: "100%" }}
+      className="w-full mx-auto flex flex-col h-full"
+      style={{ maxWidth: "100%", minHeight: "65vh" }}
     >
       <VacationPlanStepper steps={steps} currentStep={currentStep} />
 
@@ -56,7 +57,8 @@ export default function VacationPlanForm() {
             {currentStep === 1 && <VacationPlanDestinationStep />}
             {currentStep === 2 && <VacationPlanAccommodationsStep />}
             {currentStep === 3 && <VacationPlanDatesStep />}
-            {currentStep === 4 && <VacationPlanSummaryStep />}
+            {currentStep === 4 && <VacationPlanBudgetStep />}
+            {currentStep === 5 && <VacationPlanSummaryStep />}
           </motion.div>
         </AnimatePresence>
 

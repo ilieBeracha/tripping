@@ -36,7 +36,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 50 }}
               transition={{ duration: 0.3 }}
-              style={{ width: "70vw", height: "70vh" }}
+              style={{ width: "70vw", minHeight: "70vh" }}
             >
               <button
                 className="absolute top-4 right-4 bg-white text-black text-xl"

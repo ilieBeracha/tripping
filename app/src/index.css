@@ -46,13 +46,7 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
+
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -67,10 +61,24 @@ button:focus-visible {
   }
 }
 
+.react-datepicker{
+  border: none !important;
+  width: 100% !important
+}
 
+.react-datepicker__day{
+  font-size: large;
+}
+
+.react-datepicker__week{
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
 /* Datepicker Custom Styling */
 .custom-datepicker .react-datepicker {
-  border: none;
+  border: none !important;
   box-shadow: none;
 }
 
