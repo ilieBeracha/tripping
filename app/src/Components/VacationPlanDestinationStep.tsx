@@ -14,7 +14,6 @@ import SelectSearch from "./SelectSearch";
 
 export default function VacationPlanDestinationStep() {
   const useVacationPlanStore = useStore(vacationPlanStore);
-  const vacationPlan = useVacationPlanStore.vacationPlan;
 
   const vacationTypes = [
     { type: VacationTypes.Beach, icon: Sun },
