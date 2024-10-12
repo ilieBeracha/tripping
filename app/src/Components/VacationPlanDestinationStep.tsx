@@ -8,19 +8,20 @@ import {
   Sailboat,
   Snowflake,
 } from "lucide-react";
-import { motion } from "framer-motion";
+import IconSelect from "./IconSelect";
+import { VacationTypes } from "../types/vacationPlan";
 
 export default function VacationPlanDestinationStep() {
   const useVacationPlanStore = useStore(vacationPlanStore);
   const vacationPlan = useVacationPlanStore.vacationPlan;
 
   const vacationTypes = [
-    { type: "Beach", icon: Sun },
-    { type: "Mountain", icon: Mountain },
-    { type: "Tropical", icon: Palmtree },
-    { type: "City", icon: Building },
-    { type: "Cruise", icon: Sailboat },
-    { type: "Winter", icon: Snowflake },
+    { type: VacationTypes.Beach, icon: Sun },
+    { type: VacationTypes.Mountain, icon: Mountain },
+    { type: VacationTypes.Tropical, icon: Palmtree },
+    { type: VacationTypes.City, icon: Building },
+    { type: VacationTypes.Cruise, icon: Sailboat },
+    { type: VacationTypes.Winter, icon: Snowflake },
   ];
 
   function handleVacationType(type: string) {
@@ -28,6 +29,7 @@ export default function VacationPlanDestinationStep() {
       type = "";
     }
     useVacationPlanStore.setVacationType(type);
+    useVacationPlanStore.setDestination("");
   }
 
   const inputStyle =
@@ -57,31 +59,11 @@ export default function VacationPlanDestinationStep() {
         <label className="block text-lg font-medium text-gray-700">
           Vacation Type (optional)
         </label>
-        <div className="grid grid-cols-3 gap-4">
-          {vacationTypes.map((vacationType) => (
-            <motion.div
-              key={vacationType.type}
-              className={`p-4 border rounded-lg cursor-pointer ${
-                useVacationPlanStore.vacationPlan.vacationType ===
-                vacationType.type
-                  ? "border-main-orange bg-orange-50"
-                  : "border-gray-400 hover:border-main-orange"
-              }`}
-              onClick={() => {
-                handleVacationType(vacationType.type);
-              }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <div className="flex flex-col items-center space-y-2">
-                <vacationType.icon className="w-8 h-8 text-main-orange" />
-                <span className="text-center font-medium text-black">
-                  {vacationType.type}
-                </span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        <IconSelect
+          typeList={vacationTypes}
+          selectedType={useVacationPlanStore.vacationPlan.vacationType}
+          onSelect={handleVacationType}
+        />
       </div>
     </div>
   );

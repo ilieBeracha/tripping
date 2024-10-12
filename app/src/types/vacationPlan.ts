@@ -8,7 +8,38 @@ interface HotelBooking {
   rooms: number;
 }
 
-// Interface for Car Rental Details
+interface Accommodations {
+  hotels: HotelBooking[];
+  totalCost: number;
+  accommodationType: AccommodationType;
+}
+
+export enum AccommodationType {
+  Family = "family",
+  Friends = "friends",
+  Couple = "couple",
+  Solo = "solo",
+}
+
+export enum VacationTypes {
+  Beach = "beach",
+  Mountain = "mountain",
+  Tropical = "tropical",
+  City = "city",
+  Cruise = "cruise",
+  Winter = "winter",
+}
+
+export default interface VacationPlan {
+  destination: string;
+  startDate: string;
+  endDate: string;
+  vacationType: string;
+  budget: number;
+  accommodations: Accommodations;
+  activities: string[];
+}
+
 interface CarRental {
   carRentalCompany: string;
   rentalID: string;
@@ -27,51 +58,4 @@ interface FlightBooking {
   passengers: number;
   cabinClass: string;
   price: number;
-}
-
-// Interface for the Accommodations Section
-interface Accommodations {
-  hotels: HotelBooking[];
-  totalCost: number;
-  details: {
-    numberOfGuests: number;
-    numberOfRooms: number;
-    roomType: string;
-  };
-}
-
-// Interface for the Flight Preferences
-interface FlightPreferences {
-  numberOfPassengers: number;
-  cabinClass: string;
-}
-
-// Interface for the Car Preferences
-interface CarPreferences {
-  carType: string;
-}
-
-// Interface for Transportation Section
-interface Transportation {
-  flights: {
-    bookedFlights: FlightBooking[];
-    totalCost: number;
-    flightPreferences: FlightPreferences;
-  };
-  carRentals: {
-    bookedCars: CarRental[];
-    totalCost: number;
-    carPreferences: CarPreferences;
-  };
-}
-
-export default interface VacationPlan {
-  destination: string;
-  startDate: string;
-  endDate: string;
-  vacationType: string;
-  budget: number;
-  accommodations: Accommodations;
-  transportation: Transportation;
-  activities: string[];
 }

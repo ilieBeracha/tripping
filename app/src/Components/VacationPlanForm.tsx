@@ -4,20 +4,13 @@ import VacationPlanStepper from "./VacationPlanStepper";
 import VacationPlanDestinationStep from "./VacationPlanDestinationStep";
 import VacationPlanDatesStep from "./VacationPlanDatesStep";
 import VacationPlanAccommodationsStep from "./VacationPlanAccommodationsStep";
-import VacationPlanTransportationStep from "./VacationPlanTransportationStep";
 import VacationPlanSummaryStep from "./VacationPlanSummaryStep";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 
 export default function VacationPlanForm() {
   const [currentStep, setCurrentStep] = useState(1);
 
-  const steps = [
-    "Destination",
-    "Dates",
-    "Accommodations",
-    "Transportation",
-    "Summary",
-  ];
+  const steps = ["Destination", "Accommodations", "Dates", "Summary"];
 
   const handleNext = () => {
     if (currentStep < steps.length) {
@@ -39,13 +32,12 @@ export default function VacationPlanForm() {
 
   return (
     <div
-      className="w-full mx-auto px-20 py-20 h-full flex flex-col"
-      style={{ width: "100vw", height: "100vh" }}
+      className="w-full mx-auto flex flex-col"
+      style={{ maxWidth: "100%", height: "100%" }}
     >
-      {/* Stepper Component */}
       <VacationPlanStepper steps={steps} currentStep={currentStep} />
 
-      <div className="bg-white p-10 rounded-lg flex flex-col justify-between flex-1">
+      <div className="bg-white px-10 rounded-lg flex flex-col justify-between flex-1">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentStep}
@@ -56,20 +48,16 @@ export default function VacationPlanForm() {
             transition={{ duration: 0.3 }}
           >
             {currentStep === 1 && <VacationPlanDestinationStep />}
-            {currentStep === 2 && <VacationPlanDatesStep />}
-            {currentStep === 3 && <VacationPlanAccommodationsStep />}
-            {currentStep === 4 && <VacationPlanTransportationStep />}
-            {currentStep === 5 && <VacationPlanSummaryStep />}
+            {currentStep === 2 && <VacationPlanAccommodationsStep />}
+            {currentStep === 3 && <VacationPlanDatesStep />}
+            {currentStep === 4 && <VacationPlanSummaryStep />}
           </motion.div>
         </AnimatePresence>
 
-        {/* Navigation Buttons */}
         <div className="mt-12 flex justify-between">
           <motion.button
             className={`py-3 px-8 rounded-lg text-white bg-sec-blue ${
-              currentStep === 1
-                ? "opacity-50 cursor-not-allowed"
-                : "hover:bg-blue-700"
+              currentStep === 1 ? "opacity-50 cursor-not-allowed" : ""
             }`}
             onClick={handlePrevious}
             disabled={currentStep === 1}
