@@ -10,7 +10,7 @@ export default function IconSelect({
   onSelect: (type: any) => void;
 }) {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-h-60 overflow-scroll py-2">
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 overflow-auto py-2">
       {typeList.map((element) => (
         <motion.div
           key={element.type}
@@ -20,7 +20,6 @@ export default function IconSelect({
               : "border-gray-400 hover:border-main-orange"
           }`}
           onClick={() => onSelect(element.type)}
-          whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
           <div className="flex flex-col items-center space-y-2">

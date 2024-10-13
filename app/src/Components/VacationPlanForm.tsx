@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import VacationPlanStepper from "./VacationPlanStepper";
+import VacationPlanChoiceStep from "./VacationPlanChoiceStep"; // New step component
 import VacationPlanDestinationStep from "./VacationPlanDestinationStep";
 import VacationPlanDatesStep from "./VacationPlanDatesStep";
 import VacationPlanAccommodationsStep from "./VacationPlanAccommodationsStep";
@@ -13,10 +14,25 @@ import { vacationPlanStore } from "../stores/VacationPlanStore";
 export default function VacationPlanForm() {
   const [currentStep, setCurrentStep] = useState(1);
   const store = useStore(vacationPlanStore);
+  const [choiceStep, setChoiceStep] = useState(1);
 
-  const steps = ["Destination", "Accommodations", "Dates", "Budget", "Summary"];
+  const steps = [
+    "Choice",
+    "Destination",
+    "Accommodations",
+    "Dates",
+    "Budget",
+    "Summary",
+  ];
 
   const handleNext = () => {
+    if (
+      currentStep === 2 &&
+      !store.vacationPlan.vacationType &&
+      !store.vacationPlan.destination
+    ) {
+      return;
+    }
     if (currentStep < steps.length) {
       setCurrentStep(currentStep + 1);
     } else {
@@ -31,6 +47,11 @@ export default function VacationPlanForm() {
     }
   };
 
+  function handleChoiceStep(step: number) {
+    setChoiceStep(step);
+    handleNext();
+  }
+
   const stepVariants = {
     hidden: { opacity: 0, x: 50 },
     visible: { opacity: 1, x: 0 },
@@ -43,48 +64,59 @@ export default function VacationPlanForm() {
       style={{ maxWidth: "100%", minHeight: "65vh" }}
     >
       <VacationPlanStepper steps={steps} currentStep={currentStep} />
-
-      <div className="bg-white px-10 rounded-lg flex flex-col justify-between flex-1 h-[80%]">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentStep}
-            variants={stepVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            transition={{ duration: 0.3 }}
-          >
-            {currentStep === 1 && <VacationPlanDestinationStep />}
-            {currentStep === 2 && <VacationPlanAccommodationsStep />}
-            {currentStep === 3 && <VacationPlanDatesStep />}
-            {currentStep === 4 && <VacationPlanBudgetStep />}
-            {currentStep === 5 && <VacationPlanSummaryStep />}
-          </motion.div>
-        </AnimatePresence>
-
-        <div className="flex justify-between">
-          <motion.button
-            className={`py-3 px-8 rounded-lg text-white bg-sec-blue ${
-              currentStep === 1 ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-            onClick={handlePrevious}
-            disabled={currentStep === 1}
-            whileHover={{ scale: currentStep !== 1 ? 1.05 : 1 }}
-            whileTap={{ scale: currentStep !== 1 ? 0.95 : 1 }}
-          >
-            <ChevronLeft className="inline-block mr-2" size={18} />
-            Previous
-          </motion.button>
-          <motion.button
-            className="py-1 px-4 text-sm rounded-lg text-white bg-main-orange hover:bg-orange-600 transition-colors"
-            onClick={handleNext}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            {currentStep === steps.length ? "Finish" : "Next"}
-            <ChevronRight className="inline-block ml-2" size={18} />
-          </motion.button>
+      <div className="flex flex-col flex-grow">
+        <div
+          className="bg-white px-10 rounded-lg flex flex-col flex-grow"
+          style={{ height: "calc(100% - 4rem)" }}
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentStep}
+              variants={stepVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              transition={{ duration: 0.3 }}
+              className="flex-grow flex flex-col"
+            >
+              {currentStep === 1 && (
+                <VacationPlanChoiceStep setChoiceStep={handleChoiceStep} />
+              )}
+              {currentStep === 2 && (
+                <VacationPlanDestinationStep choiceStep={choiceStep} />
+              )}
+              {currentStep === 3 && <VacationPlanAccommodationsStep />}
+              {currentStep === 4 && <VacationPlanDatesStep />}
+              {currentStep === 5 && <VacationPlanBudgetStep />}
+              {currentStep === 6 && <VacationPlanSummaryStep />}
+            </motion.div>
+          </AnimatePresence>
         </div>
+        {currentStep !== 1 && (
+          <div className="flex justify-between mt-4 h-16">
+            <motion.button
+              className={`py-3 px-8 rounded-lg text-white bg-sec-blue ${
+                currentStep === 1 ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              onClick={handlePrevious}
+              disabled={currentStep === 1}
+              whileHover={{ scale: currentStep !== 1 ? 1.05 : 1 }}
+              whileTap={{ scale: currentStep !== 1 ? 0.95 : 1 }}
+            >
+              <ChevronLeft className="inline-block mr-2" size={18} />
+              Previous
+            </motion.button>
+            <motion.button
+              className="py-1 px-4 text-sm rounded-lg text-white bg-main-orange hover:bg-orange-600 transition-colors"
+              onClick={handleNext}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {currentStep === steps.length ? "Finish" : "Next"}
+              <ChevronRight className="inline-block ml-2" size={18} />
+            </motion.button>
+          </div>
+        )}
       </div>
     </div>
   );

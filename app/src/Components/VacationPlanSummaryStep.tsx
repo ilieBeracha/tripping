@@ -8,10 +8,16 @@ import {
   Palmtree,
   DollarSign,
 } from "lucide-react";
+import { useEffect } from "react";
 
 export default function VacationPlanSummaryStep() {
   const useVacationPlanStore = useStore(vacationPlanStore);
   const vacationPlan = useVacationPlanStore.vacationPlan;
+
+  useEffect(() => {
+    console.log("Vacation Plan Submitted");
+    console.log(vacationPlan);
+  });
 
   // Convert enum values to human-readable format
   const accommodationTypeDisplay = () => {
