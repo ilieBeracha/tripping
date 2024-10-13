@@ -39,12 +39,12 @@ export default function VacationPlanForm() {
 
   return (
     <div
-      className="w-full mx-auto flex flex-col h-full"
+      className="w-full mx-auto flex flex-col h-full text-[90%]"
       style={{ maxWidth: "100%", minHeight: "65vh" }}
     >
       <VacationPlanStepper steps={steps} currentStep={currentStep} />
 
-      <div className="bg-white px-10 rounded-lg flex flex-col justify-between flex-1">
+      <div className="bg-white px-10 rounded-lg flex flex-col justify-between flex-1 h-[80%]">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentStep}
@@ -62,7 +62,7 @@ export default function VacationPlanForm() {
           </motion.div>
         </AnimatePresence>
 
-        <div className="mt-12 flex justify-between">
+        <div className="flex justify-between">
           <motion.button
             className={`py-3 px-8 rounded-lg text-white bg-sec-blue ${
               currentStep === 1 ? "opacity-50 cursor-not-allowed" : ""
@@ -76,7 +76,7 @@ export default function VacationPlanForm() {
             Previous
           </motion.button>
           <motion.button
-            className="py-3 px-8 rounded-lg text-white bg-main-orange hover:bg-orange-600 transition-colors"
+            className="py-1 px-4 text-sm rounded-lg text-white bg-main-orange hover:bg-orange-600 transition-colors"
             onClick={handleNext}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

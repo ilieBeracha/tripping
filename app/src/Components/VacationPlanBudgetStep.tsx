@@ -21,20 +21,20 @@ export default function VacationPlanBudgetStep() {
   };
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-3xl font-bold text-sec-blue">Choose Your Budget</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="space-y-8 p-8 rounded-xl">
+      <h2 className="text-2xl font-bold text-sec-blue">Choose Your Budget</h2>
+      <div className="grid grid-cols-1  gap-6 h-full">
         {budgetOptions.map((option) => (
           <div
             key={option.value}
-            className={`cursor-pointer p-6 rounded-lg shadow-md transition-transform transform hover:scale-105 ${
+            className={`cursor-pointer p-6 rounded-lg h-full shadow-md transition-transform transform hover:scale-105  ${
               selectedBudget === option.value
-                ? "bg-main-orange text-white"
-                : "bg-white text-gray-700"
+                ? "bg-main-orange text-white "
+                : "bg-sec-blue"
             }`}
             onClick={() => handleBudgetChange(option.value)}
           >
-            <p className="text-lg font-semibold">{option.label}</p>
+            <p className="text-md font-semibold ">{option.label}</p>
           </div>
         ))}
       </div>

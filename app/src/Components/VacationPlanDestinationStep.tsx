@@ -38,12 +38,12 @@ export default function VacationPlanDestinationStep() {
       : " opacity-50 cursor-not-allowed w-full p-3 border border-gray-400 rounded-lg bg-white text-gray-800 focus:ring-2 focus:ring-main-orange py-4 focus:border-transparent transition";
 
   return (
-    <div className="space-y-8">
-      <h2 className="text-3xl font-bold text-sec-blue">
+    <div className="space-y-8 p-8 rounded-xl">
+      <h2 className="text-2xl font-bold text-sec-blue">
         Choose Your Vacation Details
       </h2>
-      <div className="space-y-4">
-        <label className="block text-lg font-medium text-gray-700">
+      <div>
+        <label className="block text-md font-medium text-gray-700">
           Specific Destination (optional)
         </label>
         <SelectSearch
@@ -53,8 +53,8 @@ export default function VacationPlanDestinationStep() {
           }
         />{" "}
       </div>
-      <div className="space-y-4">
-        <label className="block text-lg font-medium text-gray-700">
+      <div>
+        <label className="block text-md font-medium text-gray-700">
           Vacation Type (optional)
         </label>
         <IconSelect

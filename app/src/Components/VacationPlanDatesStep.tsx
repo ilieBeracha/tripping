@@ -67,8 +67,8 @@ export default function VacationPlanDatesStep() {
   };
 
   return (
-    <div className="space-y-8 px-4 py-10">
-      <h2 className="text-4xl font-extrabold text-sec-blue mb-8 text-center">
+    <div className="space-y-8 p-8 rounded-xl">
+      <h2 className="text-2xl font-extrabold text-sec-blue mb-8 text-center">
         Choose Your Travel Dates
       </h2>
 

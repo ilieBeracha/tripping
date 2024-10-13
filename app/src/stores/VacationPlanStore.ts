@@ -27,6 +27,7 @@ export const vacationPlanStore = create<VacationPlanStore>((set) => ({
     },
     activities: [],
   },
+
   setVacationPlan: (newVacationPlan: VacationPlan) =>
     set(() => ({ vacationPlan: newVacationPlan })),
 

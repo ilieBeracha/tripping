@@ -8,8 +8,8 @@ export default function VacationPlanStepper({
   currentStep: number;
 }) {
   return (
-    <div className="mb-12">
-      <div className="flex justify-between items-center mb-6">
+    <div>
+      <div className="flex justify-between items-center mb-4">
         {steps.map((step, index) => (
           <div key={index} className="flex-1 text-center">
             <motion.div

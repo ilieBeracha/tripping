@@ -15,13 +15,23 @@ export enum VacationTypes {
 }
 
 export enum HotelType {
+  Standard = "standard",
   Luxury = "luxury",
   Boutique = "boutique",
   Resort = "resort",
-  Standard = "standard",
   Camping = "camping",
+  Hostel = "hostel",
+  Apartment = "apartment",
+  UniqueStays = "unique stays",
+  FarmStay = "farm_stay",
+  Homestay = "homestay",
+  Cottage = "cottage",
+  Chalet = "chalet",
+  Lodge = "lodge",
+  CountryHouse = "country house",
+  HolidayPark = "holiday park",
+  Villa = "villa",
 }
-
 export interface Accommodation {
   accommodationType: AccommodationType;
   hotelType: HotelType;

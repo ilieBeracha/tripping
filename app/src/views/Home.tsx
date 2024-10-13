@@ -31,19 +31,13 @@ export default function Home() {
             <div className="absolute inset-0" onClick={closeVacationPlan} />
 
             <motion.div
-              className="relative bg-white p-16 rounded-2xl shadow-lg z-50"
+              className="relative bg-white px-10 pb-10 pt-8 rounded-2xl shadow-lg z-50"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 50 }}
               transition={{ duration: 0.3 }}
-              style={{ width: "70vw", minHeight: "70vh" }}
+              style={{ width: "70vw", height: "80vh" }}
             >
-              <button
-                className="absolute top-4 right-4 bg-white text-black text-xl"
-                onClick={closeVacationPlan}
-              >
-                ✕
-              </button>
               <VacationPlanForm />
             </motion.div>
           </motion.div>

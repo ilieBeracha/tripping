@@ -10,7 +10,7 @@ export default function IconSelect({
   onSelect: (type: any) => void;
 }) {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-h-60 overflow-scroll py-2">
       {typeList.map((element) => (
         <motion.div
           key={element.type}
@@ -32,7 +32,7 @@ export default function IconSelect({
               }`}
             />
             <span
-              className={`text-center font-medium ${
+              className={`text-center font-medium text-sm ${
                 selectedType === element.type
                   ? "text-main-orange"
                   : "text-black"
