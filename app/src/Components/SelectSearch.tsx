@@ -7,26 +7,25 @@ import {
   ComboboxOption,
 } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import { countryList } from "../config/countriesList";
 
-export default function SelectSearch({ inputStyle, onSelect }: any) {
+export default function SelectSearch({ list, inputStyle, onSelect }: any) {
   const [query, setQuery] = useState("");
-  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedElem, setSelectedElem] = useState("");
 
-  const filteredCountries =
+  const filteredList =
     query === ""
-      ? countryList
-      : countryList.filter((country) =>
-          country.toLowerCase().includes(query.toLowerCase())
+      ? list
+      : list.filter((elem: string) =>
+          elem.toLowerCase().includes(query.toLowerCase())
         );
 
   return (
     <Combobox
       as="div"
-      value={selectedCountry}
-      onChange={(country) => {
-        setSelectedCountry(country as string);
-        onSelect(country);
+      value={selectedElem}
+      onChange={(elem) => {
+        setSelectedElem(elem as string);
+        onSelect(elem);
         setQuery("");
       }}
     >
@@ -45,12 +44,12 @@ export default function SelectSearch({ inputStyle, onSelect }: any) {
           />
         </ComboboxButton>
 
-        {filteredCountries.length > 0 && (
+        {filteredList.length > 0 && (
           <ComboboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            {filteredCountries.map((country) => (
+            {filteredList.map((elem: string) => (
               <ComboboxOption
-                key={country}
-                value={country}
+                key={elem}
+                value={elem}
                 className={({ active }) =>
                   `relative cursor-default select-none py-2 pl-3 pr-9 ${
                     active ? "bg-main-orange text-white" : "text-gray-900"
@@ -64,7 +63,7 @@ export default function SelectSearch({ inputStyle, onSelect }: any) {
                         selected ? "font-medium" : "font-normal"
                       }`}
                     >
-                      {country}
+                      {elem}
                     </span>
                     {selected ? (
                       <span

@@ -1,16 +1,10 @@
 import { useStore } from "zustand";
 import { vacationPlanStore } from "../stores/VacationPlanStore";
-import {
-  Sun,
-  Mountain,
-  Palmtree,
-  Building,
-  Sailboat,
-  Snowflake,
-} from "lucide-react";
+import { Sun, Palmtree, Building, Sailboat, Rocket, Bike } from "lucide-react";
 import IconSelect from "./IconSelect";
 import { VacationTypes } from "../types/vacationPlan";
 import SelectSearch from "./SelectSearch";
+import { cityVacationTypes } from "../config/countriesList";
 
 export default function VacationPlanDestinationStep({
   choiceStep,
@@ -19,13 +13,15 @@ export default function VacationPlanDestinationStep({
 }) {
   const useVacationPlanStore = useStore(vacationPlanStore);
 
+  const country = useVacationPlanStore.vacationPlan.destination;
+
   const vacationTypes = [
     { type: VacationTypes.Beach, icon: Sun },
-    { type: VacationTypes.Mountain, icon: Mountain },
     { type: VacationTypes.Tropical, icon: Palmtree },
     { type: VacationTypes.City, icon: Building },
     { type: VacationTypes.Cruise, icon: Sailboat },
-    { type: VacationTypes.Winter, icon: Snowflake },
+    { type: VacationTypes.Mountain, icon: Rocket },
+    { type: VacationTypes.Extreme, icon: Bike },
   ];
 
   function handleVacationType(type: string) {
@@ -49,11 +45,23 @@ export default function VacationPlanDestinationStep({
             Specific Destination
           </h2>
           <SelectSearch
+            list={Object.keys(cityVacationTypes)}
             inputStyle={inputStyle}
             onSelect={(country: any) =>
               useVacationPlanStore.setDestination(country)
             }
-          />{" "}
+          />
+          {useVacationPlanStore.vacationPlan.destination !== "" && (
+            <SelectSearch
+              list={cityVacationTypes[country].map(
+                (country: any) => country.city
+              )}
+              inputStyle={inputStyle}
+              // onSelect={(country: any) =>
+              //   useVacationPlanStore.setDestination(country)
+              // }
+            />
+          )}
         </div>
       ) : (
         <div>

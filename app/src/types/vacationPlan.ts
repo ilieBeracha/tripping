@@ -11,7 +11,8 @@ export enum VacationTypes {
   Tropical = "tropical",
   City = "city",
   Cruise = "cruise",
-  Winter = "winter",
+  Adventure = "adventure",
+  Extreme = "extreme",
 }
 
 export enum HotelType {
