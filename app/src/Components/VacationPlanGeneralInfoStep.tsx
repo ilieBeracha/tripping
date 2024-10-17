@@ -38,7 +38,7 @@ export default function VacationPlanBudgetStep() {
             key={option.value}
             className={`cursor-pointer p-6 sm:p-10 rounded-lg border border-gray-300 shadow-md transition-transform transform hover:scale-105 hover:shadow-lg ${
               selectedBudget === option.value
-                ? "bg-gray-200 border-gray-400"
+                ? "bg-main-orange border-gray-400"
                 : "bg-white"
             }`}
             onClick={() => handleBudgetChange(option.value)}

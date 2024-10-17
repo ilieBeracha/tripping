@@ -9,6 +9,7 @@ export default function CalenderRange() {
   return (
     <>
       <Datepicker
+        displayFormat="DD/MM/YYYY"
         value={dates}
         onChange={(newValue: any) => useVacationPlanStore.setDates(newValue)}
       />

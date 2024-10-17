@@ -53,6 +53,7 @@ export const vacationPlanStore = create<VacationPlanStore>((set) => ({
   },
   setDates: (newDateRange: Dates) => {
     const { startDate, endDate } = newDateRange;
+
     set((state) => ({
       vacationPlan: { ...state.vacationPlan, dates: { startDate, endDate } },
     }));
