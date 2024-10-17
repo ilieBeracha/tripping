@@ -22,16 +22,15 @@ export default function VacationPlanBudgetStep() {
   };
 
   return (
-    <div className="space-y-8 p-6 sm:p-8 rounded-xl bg-white ">
-      <h2 className="text-2xl font-extrabold text-gray-800 mb-10 text-center">
+    <div className="space-y-8 p-8 rounded-xl">
+      <h2 className="text-2xl font-bold text-sec-blue">
+        {" "}
         Choose Your Travel Dates
       </h2>
 
       <CalenderRange />
 
-      <h2 className="text-2xl font-extrabold text-gray-800 mt-10 text-center">
-        Choose Your Budget
-      </h2>
+      <h2 className="text-2xl font-bold text-sec-blue"> Choose Your Budget</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {budgetOptions.map((option) => (

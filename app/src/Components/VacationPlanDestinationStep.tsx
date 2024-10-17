@@ -52,7 +52,7 @@ export default function VacationPlanDestinationStep({
     <div className="space-y-8 p-8 rounded-xl">
       {choiceStep === 1 ? (
         <div className="w-full flex flex-col gap-6">
-          <h2 className="text-2xl font-extrabold text-sec-blue mb-8 text-center">
+          <h2 className="text-2xl font-bold text-sec-blue">
             Specific Destination
           </h2>
           <SelectSearch
@@ -85,10 +85,8 @@ export default function VacationPlanDestinationStep({
           )}
         </div>
       ) : (
-        <div>
-          <label className="block text-md font-medium text-gray-700">
-            Vacation Type
-          </label>
+        <div className="space-y-8 rounded-xl">
+          <h2 className="text-2xl font-bold text-sec-blue"> Vacation Type</h2>
           <IconSelect
             typeList={vacationTypes}
             selectedType={useVacationPlanStore.vacationPlan.vacationType}

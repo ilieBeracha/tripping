@@ -19,8 +19,8 @@ export const BorderBeam = ({
   borderWidth = 2,
   colorFrom = "#ffaa40",
   colorTo = "#9c40ff",
-  delay = Math.random() * 5,
 }: BorderBeamProps) => {
+  const delay = Math.random() * 5;
   return (
     <div
       style={

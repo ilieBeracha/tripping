@@ -6,11 +6,11 @@ export default function VacationPlanChoiceStep({
   setChoiceStep: (step: number) => void;
 }) {
   return (
-    <div className="p-8 rounded-xl">
-      <h2 className="text-3xl font-bold text-gray-700 flex justify-center items-center">
+    <div className=" p-8 rounded-xl">
+      <h2 className="text-2xl font-bold text-sec-blue  flex items-center justify-center">
         Choose Your Vacation Details
       </h2>
-      <div className="p-8 rounded-xl flex justify-center gap-10 items-center w-full h-full">
+      <div className="p-8 flex-grow rounded-xl flex justify-center gap-10 items-center w-full h-full">
         <Card
           title="Specific Destination"
           description="Choose this option to plan your vacation based on a specific location you have in mind."

@@ -90,9 +90,9 @@ export default function VacationPlanForm() {
           </AnimatePresence>
         </div>
         {currentStep !== 1 && (
-          <div className="flex justify-between mt-4 h-16">
+          <div className="flex justify-between mt-4 p-4">
             <motion.button
-              className={`py-3 px-8 rounded-lg text-white bg-sec-blue ${
+              className={` rounded-lg text-white bg-sec-blue ${
                 currentStep === 1 ? "opacity-50 cursor-not-allowed" : ""
               }`}
               onClick={handlePrevious}
@@ -104,7 +104,7 @@ export default function VacationPlanForm() {
               Previous
             </motion.button>
             <motion.button
-              className="py-1 px-4 text-sm rounded-lg text-white bg-main-orange hover:bg-orange-600 transition-colors"
+              className=" text-sm rounded-lg text-white bg-main-orange hover:bg-orange-600 transition-colors"
               onClick={handleNext}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

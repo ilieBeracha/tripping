@@ -33,7 +33,7 @@ export default function Home() {
             <div className="absolute inset-0" onClick={closeVacationPlan} />
 
             <motion.div
-              className="relative bg-white px-10 pb-10 pt-8 rounded-[5px] shadow-lg z-50"
+              className="relative bg-white px-10 pb-6 pt-8 rounded-[5px] shadow-lg z-50"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 50 }}
