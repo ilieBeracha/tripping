@@ -6,7 +6,8 @@ import VacationPlan, {
 
 interface VacationPlanStore {
   vacationPlan: VacationPlan;
-  setDestination: (destination: string) => void;
+  setCountry: (country: string) => void;
+  setCity: (city: string) => void;
   setDates: (startDate: string, endDate: string) => void;
   setBudget: (budget: number) => void;
   setAccommodationType: (accommodationType: AccommodationType) => void;
@@ -16,7 +17,8 @@ interface VacationPlanStore {
 
 export const vacationPlanStore = create<VacationPlanStore>((set) => ({
   vacationPlan: {
-    destination: "",
+    country: "",
+    city: "",
     vacationType: "",
     startDate: "",
     endDate: "",
@@ -31,9 +33,14 @@ export const vacationPlanStore = create<VacationPlanStore>((set) => ({
   setVacationPlan: (newVacationPlan: VacationPlan) =>
     set(() => ({ vacationPlan: newVacationPlan })),
 
-  setDestination: (destination: string) => {
+  setCountry: (country: string) => {
     set((state) => ({
-      vacationPlan: { ...state.vacationPlan, destination },
+      vacationPlan: { ...state.vacationPlan, country },
+    }));
+  },
+  setCity: (city: string) => {
+    set((state) => ({
+      vacationPlan: { ...state.vacationPlan, city },
     }));
   },
   setVacationType: (vacationType: string) => {

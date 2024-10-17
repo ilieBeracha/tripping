@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Combobox,
   ComboboxInput,
@@ -7,10 +6,17 @@ import {
   ComboboxOption,
 } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import { useState } from "react";
 
-export default function SelectSearch({ list, inputStyle, onSelect }: any) {
+export default function SelectSearch({
+  list,
+  inputStyle,
+  onSelect,
+  selectedElem,
+  setSelectedElem,
+  placeholder,
+}: any) {
   const [query, setQuery] = useState("");
-  const [selectedElem, setSelectedElem] = useState("");
 
   const filteredList =
     query === ""
@@ -32,12 +38,17 @@ export default function SelectSearch({ list, inputStyle, onSelect }: any) {
       <div className="relative mt-2">
         <ComboboxInput
           className={inputStyle}
-          onChange={(event) => setQuery(event.target.value)}
-          onBlur={() => setQuery("")}
-          displayValue={(country: any) => country}
-          placeholder="Enter destination"
+          onChange={(event) => {
+            setQuery(event.target.value);
+            if (event.target.value === "") {
+              setSelectedElem("");
+              onSelect("");
+            }
+          }}
+          displayValue={(elem: any) => elem}
+          placeholder={placeholder}
         />
-        <ComboboxButton className="absolute focus:ring-0 inset-y-0 right-0  pr-2 bg-transparent flex items-center justify-center">
+        <ComboboxButton className="absolute focus:ring-0 inset-y-0 right-0 pr-2 bg-transparent flex items-center justify-center">
           <ChevronUpDownIcon
             className="h-5 w-5 text-gray-400"
             aria-hidden="true"

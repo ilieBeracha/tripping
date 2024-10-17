@@ -7,6 +7,7 @@ import {
   Hotel,
   Palmtree,
   DollarSign,
+  AreaChart,
 } from "lucide-react";
 import { useEffect } from "react";
 
@@ -19,7 +20,7 @@ export default function VacationPlanSummaryStep() {
     console.log(vacationPlan);
   });
 
-  // Convert enum values to human-readable format
+
   const accommodationTypeDisplay = () => {
     switch (vacationPlan.accommodation.accommodationType) {
       case "family":
@@ -85,10 +86,16 @@ export default function VacationPlanSummaryStep() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <SummaryCard
           icon={vacationPlan.vacationType ? Palmtree : MapPin}
-          title={vacationPlan.vacationType ? "Vacation Type" : "Destination"}
-          value={vacationPlan.vacationType || vacationPlan.destination}
-          fullWidth={true} // Make this card span full width
+          title={vacationPlan.vacationType ? "Vacation Type" : "Country"}
+          value={vacationPlan.vacationType || vacationPlan.country}
         />
+        {vacationPlan.city !== "" && (
+          <SummaryCard
+            icon={AreaChart}
+            title="City"
+            value={vacationPlan.city}
+          />
+        )}
         <SummaryCard
           icon={Calendar}
           title="Travel Dates"

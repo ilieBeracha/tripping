@@ -39,7 +39,8 @@ export interface Accommodation {
 }
 
 export default interface VacationPlan {
-  destination: string;
+  country: string;
+  city: string;
   startDate: string;
   endDate: string;
   vacationType: string;

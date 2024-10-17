@@ -29,7 +29,8 @@ export default function VacationPlanForm() {
     if (
       currentStep === 2 &&
       !store.vacationPlan.vacationType &&
-      !store.vacationPlan.destination
+
+      !store.vacationPlan.country
     ) {
       return;
     }

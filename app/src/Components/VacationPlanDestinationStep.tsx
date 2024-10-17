@@ -1,4 +1,5 @@
 import { useStore } from "zustand";
+import { useState } from "react";
 import { vacationPlanStore } from "../stores/VacationPlanStore";
 import { Sun, Palmtree, Building, Sailboat, Rocket, Bike } from "lucide-react";
 import IconSelect from "./IconSelect";
@@ -12,8 +13,8 @@ export default function VacationPlanDestinationStep({
   choiceStep: number;
 }) {
   const useVacationPlanStore = useStore(vacationPlanStore);
-
-  const country = useVacationPlanStore.vacationPlan.destination;
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
 
   const vacationTypes = [
     { type: VacationTypes.Beach, icon: Sun },
@@ -29,7 +30,10 @@ export default function VacationPlanDestinationStep({
       type = "";
     }
     useVacationPlanStore.setVacationType(type);
-    useVacationPlanStore.setDestination("");
+    useVacationPlanStore.setCountry("");
+    useVacationPlanStore.setCity("");
+    setSelectedCountry("");
+    setSelectedCity("");
   }
 
   const inputStyle =
@@ -47,19 +51,30 @@ export default function VacationPlanDestinationStep({
           <SelectSearch
             list={Object.keys(cityVacationTypes)}
             inputStyle={inputStyle}
-            onSelect={(country: any) =>
-              useVacationPlanStore.setDestination(country)
-            }
+
+            onSelect={(country: any) => {
+              useVacationPlanStore.setCountry(country);
+              useVacationPlanStore.setCity("");
+              setSelectedCountry(country);
+              setSelectedCity("");
+            }}
+            selectedElem={selectedCountry}
+            setSelectedElem={setSelectedCountry}
+            placeholder="Enter country"
           />
-          {useVacationPlanStore.vacationPlan.destination !== "" && (
+          {selectedCountry !== "" && (
             <SelectSearch
-              list={cityVacationTypes[country].map(
-                (country: any) => country.city
+              list={cityVacationTypes[selectedCountry]?.map(
+                (cityInfo: any) => cityInfo.city
               )}
               inputStyle={inputStyle}
-              // onSelect={(country: any) =>
-              //   useVacationPlanStore.setDestination(country)
-              // }
+              onSelect={(city: any) => {
+                useVacationPlanStore.setCity(city);
+                setSelectedCity(city);
+              }}
+              selectedElem={selectedCity}
+              setSelectedElem={setSelectedCity}
+              placeholder="Enter city"
             />
           )}
         </div>
