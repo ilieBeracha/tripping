@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import VacationPlan, {
   AccommodationType,
+  Dates,
   HotelType,
 } from "../types/vacationPlan";
 
@@ -8,7 +9,7 @@ interface VacationPlanStore {
   vacationPlan: VacationPlan;
   setCountry: (country: string) => void;
   setCity: (city: string) => void;
-  setDates: (startDate: string, endDate: string) => void;
+  setDates: (newDateRange: Dates) => void;
   setBudget: (budget: number) => void;
   setAccommodationType: (accommodationType: AccommodationType) => void;
   setVacationType: (vacationType: string) => void;
@@ -20,9 +21,11 @@ export const vacationPlanStore = create<VacationPlanStore>((set) => ({
     country: "",
     city: "",
     vacationType: "",
-    startDate: "",
-    endDate: "",
     budget: 0,
+    dates: {
+      startDate: new Date(),
+      endDate: new Date(),
+    },
     accommodation: {
       accommodationType: AccommodationType.Family,
       hotelType: HotelType.Standard,
@@ -48,9 +51,10 @@ export const vacationPlanStore = create<VacationPlanStore>((set) => ({
       vacationPlan: { ...state.vacationPlan, vacationType },
     }));
   },
-  setDates: (startDate: string, endDate: string) => {
+  setDates: (newDateRange: Dates) => {
+    const { startDate, endDate } = newDateRange;
     set((state) => ({
-      vacationPlan: { ...state.vacationPlan, startDate, endDate },
+      vacationPlan: { ...state.vacationPlan, dates: { startDate, endDate } },
     }));
   },
   setBudget: (budget: number) => {

@@ -20,7 +20,6 @@ export default function VacationPlanSummaryStep() {
     console.log(vacationPlan);
   });
 
-
   const accommodationTypeDisplay = () => {
     switch (vacationPlan.accommodation.accommodationType) {
       case "family":
@@ -58,11 +57,15 @@ export default function VacationPlanSummaryStep() {
     title,
     value,
     fullWidth = false,
+    customStyles = "",
   }: any) => (
     <div
-      className={`${
-        fullWidth ? "md:col-span-2" : ""
-      } bg-white rounded-lg shadow-md p-6 flex items-center space-x-4 transform transition-all duration-300 hover:shadow-lg`}
+      className={
+        `${
+          fullWidth ? "md:col-span-2" : ""
+        } bg-white rounded-lg shadow-md p-6 flex items-center space-x-4 transform transition-all duration-300 hover:shadow-lg` +
+        customStyles
+      }
     >
       <Icon className="w-8 h-8 text-main-orange" />
       <div>
@@ -97,11 +100,6 @@ export default function VacationPlanSummaryStep() {
           />
         )}
         <SummaryCard
-          icon={Calendar}
-          title="Travel Dates"
-          value={`${vacationPlan.startDate} - ${vacationPlan.endDate}`}
-        />
-        <SummaryCard
           icon={Home}
           title="Accommodation Type"
           value={accommodationTypeDisplay()}
@@ -114,7 +112,22 @@ export default function VacationPlanSummaryStep() {
         <SummaryCard
           icon={DollarSign}
           title="Budget"
-          value={`$${vacationPlan.budget.toLocaleString()}`}
+          value={`$${
+            vacationPlan.budget === 10000
+              ? "10,000 > "
+              : vacationPlan.budget.toLocaleString()
+          }`}
+        />
+        <SummaryCard
+          icon={Calendar}
+          title="Travel Dates"
+          value={`${new Date(
+            vacationPlan.dates.startDate
+          ).toDateString()} - ${new Date(
+            vacationPlan.dates.endDate
+          ).toDateString()}`}
+          fullWidth={true}
+          customStyles="flex items-center"
         />
       </div>
 

@@ -1,7 +1,14 @@
 import { useStore } from "zustand";
 import { useState } from "react";
 import { vacationPlanStore } from "../stores/VacationPlanStore";
-import { Sun, Palmtree, Building, Sailboat, Rocket, Bike } from "lucide-react";
+import {
+  Sun,
+  Palmtree,
+  Building,
+  Sailboat,
+  Mountain,
+  Bike,
+} from "lucide-react";
 import IconSelect from "./IconSelect";
 import { VacationTypes } from "../types/vacationPlan";
 import SelectSearch from "./SelectSearch";
@@ -21,7 +28,7 @@ export default function VacationPlanDestinationStep({
     { type: VacationTypes.Tropical, icon: Palmtree },
     { type: VacationTypes.City, icon: Building },
     { type: VacationTypes.Cruise, icon: Sailboat },
-    { type: VacationTypes.Mountain, icon: Rocket },
+    { type: VacationTypes.Mountain, icon: Mountain },
     { type: VacationTypes.Extreme, icon: Bike },
   ];
 
@@ -51,7 +58,6 @@ export default function VacationPlanDestinationStep({
           <SelectSearch
             list={Object.keys(cityVacationTypes)}
             inputStyle={inputStyle}
-
             onSelect={(country: any) => {
               useVacationPlanStore.setCountry(country);
               useVacationPlanStore.setCity("");

@@ -3,9 +3,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import VacationPlanStepper from "./VacationPlanStepper";
 import VacationPlanChoiceStep from "./VacationPlanChoiceStep"; // New step component
 import VacationPlanDestinationStep from "./VacationPlanDestinationStep";
-import VacationPlanDatesStep from "./VacationPlanDatesStep";
 import VacationPlanAccommodationsStep from "./VacationPlanAccommodationsStep";
-import VacationPlanBudgetStep from "./VacationPlanBudgetStep";
+import VacationPlanGeneralInfoStep from "./VacationPlanGeneralInfoStep";
 import VacationPlanSummaryStep from "./VacationPlanSummaryStep";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import { useStore } from "zustand";
@@ -20,8 +19,7 @@ export default function VacationPlanForm() {
     "Choice",
     "Destination",
     "Accommodations",
-    "Dates",
-    "Budget",
+    "General Info",
     "Summary",
   ];
 
@@ -29,7 +27,6 @@ export default function VacationPlanForm() {
     if (
       currentStep === 2 &&
       !store.vacationPlan.vacationType &&
-
       !store.vacationPlan.country
     ) {
       return;
@@ -61,13 +58,13 @@ export default function VacationPlanForm() {
 
   return (
     <div
-      className="w-full mx-auto flex flex-col h-full text-[90%]"
-      style={{ maxWidth: "100%", minHeight: "65vh" }}
+      className="w-full mx-auto flex flex-col h-full  justify-between text-[90%]"
+      style={{ maxWidth: "100%", minHeight: "50vh" }}
     >
       <VacationPlanStepper steps={steps} currentStep={currentStep} />
-      <div className="flex flex-col flex-grow">
+      <div className="flex flex-col flex-grow justify-between">
         <div
-          className="bg-white px-10 rounded-lg flex flex-col flex-grow"
+          className="bg-white px-10 rounded-lg flex "
           style={{ height: "calc(100% - 4rem)" }}
         >
           <AnimatePresence mode="wait">
@@ -87,9 +84,8 @@ export default function VacationPlanForm() {
                 <VacationPlanDestinationStep choiceStep={choiceStep} />
               )}
               {currentStep === 3 && <VacationPlanAccommodationsStep />}
-              {currentStep === 4 && <VacationPlanDatesStep />}
-              {currentStep === 5 && <VacationPlanBudgetStep />}
-              {currentStep === 6 && <VacationPlanSummaryStep />}
+              {currentStep === 4 && <VacationPlanGeneralInfoStep />}
+              {currentStep === 5 && <VacationPlanSummaryStep />}
             </motion.div>
           </AnimatePresence>
         </div>

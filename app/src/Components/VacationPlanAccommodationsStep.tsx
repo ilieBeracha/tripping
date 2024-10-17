@@ -34,7 +34,7 @@ export default function VacationPlanAccommodationsStep() {
   }
 
   return (
-    <div className="space-y-8 p-8 rounded-xl flex flex-col flex-grow">
+    <div className="space-y-8 p-8 rounded-xl flex flex-col">
       <h2 className="text-2xl font-bold text-sec-blue">Accommodations</h2>
       <IconSelect
         typeList={accommodationTypes}

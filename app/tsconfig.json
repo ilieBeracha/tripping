@@ -8,19 +8,19 @@
   ],
   "compilerOptions": {
     "baseUrl": ".",
-      "paths": {
-        "@/*": ["./src/*"],
-        "@/components/*": ["./components/*"],
-        "@/store/*": ["./store/*"],
-        "@/pages/*": ["./pages/*"],
-        "@/contexts/*": ["./contexts/*"],
-        "@/routes/*": ["./routes/*"],
-        "@/service/*": ["./service/*"],
-        "@/utils/*": ["./utils/*"], 
-        "@/assets/*": ["./assets/*"],
-        "@/globals/*": ["./globals/*"],
-        "@/types/*": ["./types/*"],
-
-      }
-  }
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/components/*": ["./components/*"],
+      "@/store/*": ["./store/*"],
+      "@/pages/*": ["./pages/*"],
+      "@/contexts/*": ["./contexts/*"],
+      "@/routes/*": ["./routes/*"],
+      "@/service/*": ["./service/*"],
+      "@/utils/*": ["./utils/*"], 
+      "@/assets/*": ["./assets/*"],
+      "@/globals/*": ["./globals/*"],
+      "@/types/*": ["./types/*"],
+      "@/lib/*": ["./lib/*"],
+    }
+  },
 }

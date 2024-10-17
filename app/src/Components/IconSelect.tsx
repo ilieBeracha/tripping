@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { BorderBeam } from "./ui/border-beam";
 
 export default function IconSelect({
   typeList,
@@ -14,7 +15,7 @@ export default function IconSelect({
       {typeList.map((element) => (
         <motion.div
           key={element.type}
-          className={`p-4 border rounded-lg cursor-pointer ${
+          className={`p-4 border rounded-lg cursor-pointer overflow-hidden relative min-w-10 ${
             selectedType === element.type
               ? "border-main-orange bg-orange-50"
               : "border-gray-400 hover:border-main-orange"
@@ -23,8 +24,10 @@ export default function IconSelect({
           whileTap={{ scale: 0.95 }}
         >
           <div className="flex flex-col items-center space-y-2">
+            <BorderBeam />
+
             <element.icon
-              className={`w-8 h-8 ${
+              className={`w-12 h-12 ${
                 selectedType === element.type
                   ? "text-main-orange"
                   : "text-gray-600"

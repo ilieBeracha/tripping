@@ -37,12 +37,14 @@ export interface Accommodation {
   accommodationType: AccommodationType;
   hotelType: HotelType;
 }
-
+export interface Dates {
+  startDate: Date;
+  endDate: Date;
+}
 export default interface VacationPlan {
   country: string;
   city: string;
-  startDate: string;
-  endDate: string;
+  dates: Dates;
   vacationType: string;
   budget: number;
   accommodation: Accommodation;
