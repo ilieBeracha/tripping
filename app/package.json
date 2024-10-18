@@ -21,7 +21,7 @@
     "clsx": "^2.1.1",
     "cobe": "^0.6.3",
     "date-fns": "^4.1.0",
-    "framer-motion": "^11.11.8",
+    "framer-motion": "^11.11.9",
     "lucide-react": "^0.452.0",
     "path": "^0.12.7",
     "react": "^18.3.1",

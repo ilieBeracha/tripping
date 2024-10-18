@@ -41,9 +41,12 @@ export interface Dates {
   startDate: Date;
   endDate: Date;
 }
-export default interface VacationPlan {
+export interface Destination {
   country: string;
   city: string;
+}
+export default interface VacationPlan {
+  destination: Destination;
   dates: Dates;
   vacationType: string;
   budget: number;

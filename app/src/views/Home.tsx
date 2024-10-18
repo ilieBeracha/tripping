@@ -17,7 +17,10 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center relative">
+    <div
+      className="flex flex-col justify-center items-center relative"
+      style={{ height: "100vh", width: "100vw", overflow: "hidden" }}
+    >
       <Header />
       <HomeHero startVacationPlan={startVacationPlan} />
       <Globe />

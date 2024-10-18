@@ -8,12 +8,15 @@ import {
   Palmtree,
   DollarSign,
   AreaChart,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function VacationPlanSummaryStep() {
   const useVacationPlanStore = useStore(vacationPlanStore);
   const vacationPlan = useVacationPlanStore.vacationPlan;
+  const [expandedCard, setExpandedCard] = useState<string | null>(null);
 
   useEffect(() => {
     console.log("Vacation Plan Submitted");
@@ -52,26 +55,45 @@ export default function VacationPlanSummaryStep() {
     }
   };
 
+  const toggleCard = (card: string) => {
+    setExpandedCard(expandedCard === card ? null : card);
+  };
+
   const SummaryCard = ({
     icon: Icon,
     title,
     value,
-    fullWidth = false,
-    customStyles = "",
+    isExpandable = false,
+    isExpanded = false,
+    children,
   }: any) => (
     <div
-      className={
-        `${
-          fullWidth ? "md:col-span-2" : ""
-        } bg-white rounded-lg shadow-md p-6 flex items-center space-x-4 transform transition-all duration-300 hover:shadow-lg` +
-        customStyles
-      }
+      className={`bg-white rounded-lg shadow-md p-6 flex flex-col space-y-4 transition-all duration-300 hover:shadow-lg ${
+        isExpanded ? "pb-6" : "pb-4"
+      }`}
     >
-      <Icon className="w-8 h-8 text-main-orange" />
-      <div>
-        <h3 className="text-lg font-semibold text-gray-700">{title}</h3>
-        <p className="text-xl text-sec-blue">{value || "Not specified"}</p>
+      <div
+        className="flex items-center justify-between cursor-pointer"
+        onClick={() => isExpandable && toggleCard(title)}
+      >
+        <div className="flex items-center space-x-4">
+          <Icon className="w-8 h-8 text-main-orange" />
+          <div>
+            <h3 className="text-lg font-semibold text-gray-700">{title}</h3>
+            <p className="text-xl text-sec-blue">{value || "Not specified"}</p>
+          </div>
+        </div>
+        {isExpandable && (
+          <div>
+            {isExpanded ? (
+              <ChevronUp className="w-6 h-6" />
+            ) : (
+              <ChevronDown className="w-6 h-6" />
+            )}
+          </div>
+        )}
       </div>
+      {isExpanded && <div className="pt-4">{children}</div>}
     </div>
   );
 
@@ -87,28 +109,36 @@ export default function VacationPlanSummaryStep() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Vacation Type or Country */}
         <SummaryCard
           icon={vacationPlan.vacationType ? Palmtree : MapPin}
-          title={vacationPlan.vacationType ? "Vacation Type" : "Country"}
-          value={vacationPlan.vacationType || vacationPlan.country}
-        />
-        {vacationPlan.city !== "" && (
-          <SummaryCard
-            icon={AreaChart}
-            title="City"
-            value={vacationPlan.city}
-          />
-        )}
+          title={vacationPlan.vacationType ? "Vacation Type" : "Destination"}
+          value={vacationPlan.vacationType || vacationPlan.destination.country}
+          isExpandable={!!vacationPlan.destination.city}
+          isExpanded={expandedCard === "Destination"}
+        >
+          {/* Expandable content for Destination */}
+          <p className="text-lg text-gray-800">
+            <strong>City:</strong>{" "}
+            {vacationPlan.destination.city || "Not specified"}
+          </p>
+        </SummaryCard>
+
+        {/* Accommodation Type */}
         <SummaryCard
           icon={Home}
           title="Accommodation Type"
           value={accommodationTypeDisplay()}
         />
+
+        {/* Hotel Type */}
         <SummaryCard
           icon={Hotel}
           title="Hotel Type"
           value={hotelTypeDisplay()}
         />
+
+        {/* Budget */}
         <SummaryCard
           icon={DollarSign}
           title="Budget"
@@ -118,6 +148,8 @@ export default function VacationPlanSummaryStep() {
               : vacationPlan.budget.toLocaleString()
           }`}
         />
+
+        {/* Travel Dates */}
         <SummaryCard
           icon={Calendar}
           title="Travel Dates"
@@ -127,7 +159,6 @@ export default function VacationPlanSummaryStep() {
             vacationPlan.dates.endDate
           ).toDateString()}`}
           fullWidth={true}
-          customStyles="flex items-center"
         />
       </div>
 

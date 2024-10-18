@@ -2,6 +2,7 @@ import { create } from "zustand";
 import VacationPlan, {
   AccommodationType,
   Dates,
+  Destination,
   HotelType,
 } from "../types/vacationPlan";
 
@@ -18,8 +19,10 @@ interface VacationPlanStore {
 
 export const vacationPlanStore = create<VacationPlanStore>((set) => ({
   vacationPlan: {
-    country: "",
-    city: "",
+    destination: {
+      country: "",
+      city: "",
+    },
     vacationType: "",
     budget: 0,
     dates: {
@@ -38,12 +41,25 @@ export const vacationPlanStore = create<VacationPlanStore>((set) => ({
 
   setCountry: (country: string) => {
     set((state) => ({
-      vacationPlan: { ...state.vacationPlan, country },
+      vacationPlan: {
+        ...state.vacationPlan,
+        destination: {
+          country,
+          city: vacationPlanStore.getState().vacationPlan.destination.city,
+        },
+      },
     }));
   },
   setCity: (city: string) => {
     set((state) => ({
-      vacationPlan: { ...state.vacationPlan, city },
+      vacationPlan: {
+        ...state.vacationPlan,
+        destination: {
+          country:
+            vacationPlanStore.getState().vacationPlan.destination.country,
+          city,
+        },
+      },
     }));
   },
   setVacationType: (vacationType: string) => {
