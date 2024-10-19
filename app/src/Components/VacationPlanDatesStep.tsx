@@ -20,19 +20,19 @@ export default function VacationPlanDatesStep() {
       setPreferredTotalDays(0);
     }
 
-    useVacationPlanStore.setIsFlexible(flexible);
+    useVacationPlanStore.setDatesIsFlexible(flexible);
   };
 
   const handleFlexibilityTypeChange = (e: any) => {
     const selectedType = e.target.value;
     setFlexibilityType(selectedType);
-    useVacationPlanStore.setFlexibilityType(selectedType);
+    useVacationPlanStore.setDatesFlexibilityType(selectedType);
   };
 
   const handlePreferredTotalDaysChange = (e: any) => {
     const days = parseInt(e.target.value);
     setPreferredTotalDays(days);
-    useVacationPlanStore.setPreferredTotalDays(days);
+    useVacationPlanStore.setDatesPreferredTotalDays(days);
   };
 
   return (
@@ -45,28 +45,32 @@ export default function VacationPlanDatesStep() {
         <div>
           <p className="mb-2">Are your travel dates flexible?</p>
           <div className="space-x-4">
-            <label className="inline-flex items-center">
+            <div className="inline-flex items-center">
               <input
-                type="radio"
                 name="flexibility"
-                value="yes"
-                checked={isFlexible}
                 onChange={handleFlexibilityChange}
-                className="form-radio text-main-orange"
+                checked={isFlexible}
+                type="radio"
+                value="yes"
+                className="h-4 w-4 border-gray-300 text-main-orange focus:ring-main-orange"
               />
-              <span className="ml-2">Yes</span>
-            </label>
-            <label className="inline-flex items-center">
+              <label className="ml-3 block text-sm font-medium leading-6 text-gray-900 checked:bg-black">
+                Yes
+              </label>
+            </div>
+            <div className="inline-flex items-center">
               <input
                 type="radio"
                 name="flexibility"
                 value="no"
                 checked={!isFlexible}
                 onChange={handleFlexibilityChange}
-                className="form-radio text-main-orange"
+                className="h-4 w-4 border-gray-300 text-main-orange focus:ring-main-orange"
               />
-              <span className="ml-2">No</span>
-            </label>
+              <label className="ml-3 block text-sm font-medium leading-6 text-gray-900">
+                No
+              </label>
+            </div>
           </div>
         </div>
 
@@ -78,7 +82,7 @@ export default function VacationPlanDatesStep() {
               <select
                 value={flexibilityType || ""}
                 onChange={handleFlexibilityTypeChange}
-                className="form-select w-full"
+                className="form-select w-full py-3 px-4 bg-white border border-gray-300 rounded-lg text-gray-700 focus:ring-main-orange focus:border-main-orange transition-all"
               >
                 <option value="">Select an option</option>
                 <option value="dateRange">Flexible within a date range</option>

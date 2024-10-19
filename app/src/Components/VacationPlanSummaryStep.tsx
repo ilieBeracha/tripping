@@ -121,16 +121,29 @@ export default function VacationPlanSummaryStep() {
           value={vacationPlan.accommodation.hotelType || "Not specified"}
         />
 
-        {/* Budget */}
+        {/* Extended Budget Section */}
         <SummaryCard
           icon={DollarSign}
           title="Budget"
           value={`$${
-            vacationPlan.budget === 10000
-              ? "10,000 > "
-              : vacationPlan.budget.toLocaleString()
+            vacationPlan.budget.amount === 10000
+              ? "10,000 >"
+              : vacationPlan.budget.amount.toLocaleString()
           }`}
-        />
+          isExpandable={true}
+          isExpanded={expandedCard === "Budget"}
+        >
+          <p className="text-md text-gray-500">
+            <strong>Is Budget Flexible?</strong>{" "}
+            {vacationPlan.budget.isFlexible ? "Yes" : "No"}
+          </p>
+          {vacationPlan.budget.spendingPriority && (
+            <p className="text-md text-gray-500">
+              <strong>Spending Priority:</strong>{" "}
+              {vacationPlan.budget.spendingPriority}
+            </p>
+          )}
+        </SummaryCard>
 
         {/* Dates */}
         <SummaryCard

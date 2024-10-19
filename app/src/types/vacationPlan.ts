@@ -56,11 +56,25 @@ export interface Destination {
   city: string;
 }
 
+export interface Budget {
+  amount: number; // The selected budget amount
+  isFlexible: boolean; // Indicates if the user is flexible on the budget
+  spendingPriority: SpendingPriority | null; // The user's spending priority
+}
+
+export enum SpendingPriority {
+  Accommodation = "accommodation",
+  Food = "food",
+  Activities = "activities",
+  Transportation = "transportation",
+  Shopping = "shopping",
+}
+
 export default interface VacationPlan {
   destination: Destination;
   dates: Dates;
   vacationType: string;
-  budget: number;
+  budget: Budget;
   accommodation: Accommodation;
   activities: string[];
 }

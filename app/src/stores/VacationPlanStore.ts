@@ -2,6 +2,7 @@ import { create } from "zustand";
 import VacationPlan, {
   AccommodationType,
   HotelType,
+  SpendingPriority,
 } from "../types/vacationPlan";
 
 interface VacationPlanStore {
@@ -9,18 +10,17 @@ interface VacationPlanStore {
   setCountry: (country: string) => void;
   setCity: (city: string) => void;
   setDateRange: (dateRange: { startDate: Date; endDate: Date }) => void;
-  setIsFlexible: (isFlexible: boolean) => void;
-  setFlexibilityType: (
+  setDatesIsFlexible: (isFlexible: boolean) => void;
+  setDatesFlexibilityType: (
     flexibilityType: "dateRange" | "totallyFlexible" | null
   ) => void;
-  setOptimizationType: (
-    optimizationType: "bestDeal" | "lowestPrice" | null
-  ) => void;
-  setPreferredTotalDays: (preferredTotalDays: number | null) => void;
-  setBudget: (budget: number) => void;
+  setDatesPreferredTotalDays: (preferredTotalDays: number | null) => void;
+  setBudgetAmount: (budget: number) => void;
   setAccommodationType: (accommodationType: AccommodationType) => void;
   setVacationType: (vacationType: string) => void;
   setHotelType: (HotelType: HotelType) => void;
+  setBudgetSpendingPriority: (spendingPriority: SpendingPriority) => void;
+  setBudgetIsFlexible: (isFlexible: boolean) => void;
 }
 
 export const vacationPlanStore = create<VacationPlanStore>((set) => ({
@@ -30,7 +30,11 @@ export const vacationPlanStore = create<VacationPlanStore>((set) => ({
       city: "",
     },
     vacationType: "",
-    budget: 0,
+    budget: {
+      amount: 0,
+      isFlexible: false,
+      spendingPriority: null,
+    },
     dates: {
       startDate: new Date(),
       endDate: new Date(),
@@ -79,7 +83,7 @@ export const vacationPlanStore = create<VacationPlanStore>((set) => ({
       vacationPlan: { ...state.vacationPlan, vacationType },
     }));
   },
-  setIsFlexible: (isFlexible: boolean) => {
+  setDatesIsFlexible: (isFlexible: boolean) => {
     set((state) => ({
       vacationPlan: {
         ...state.vacationPlan,
@@ -94,7 +98,7 @@ export const vacationPlanStore = create<VacationPlanStore>((set) => ({
     }));
   },
 
-  setFlexibilityType: (
+  setDatesFlexibilityType: (
     flexibilityType: "dateRange" | "totallyFlexible" | null
   ) => {
     set((state) => ({
@@ -111,24 +115,7 @@ export const vacationPlanStore = create<VacationPlanStore>((set) => ({
     }));
   },
 
-  setOptimizationType: (
-    optimizationType: "bestDeal" | "lowestPrice" | null
-  ) => {
-    set((state) => ({
-      vacationPlan: {
-        ...state.vacationPlan,
-        dates: {
-          ...state.vacationPlan.dates,
-          flexibility: {
-            ...state.vacationPlan.dates.flexibility,
-            optimizationType,
-          },
-        },
-      },
-    }));
-  },
-
-  setPreferredTotalDays: (preferredTotalDays: number | null) => {
+  setDatesPreferredTotalDays: (preferredTotalDays: number | null) => {
     set((state) => ({
       vacationPlan: {
         ...state.vacationPlan,
@@ -156,9 +143,34 @@ export const vacationPlanStore = create<VacationPlanStore>((set) => ({
     }));
   },
 
-  setBudget: (budget: number) => {
+  setBudgetAmount: (budget: number) => {
     set((state) => ({
-      vacationPlan: { ...state.vacationPlan, budget },
+      vacationPlan: {
+        ...state.vacationPlan,
+        budget: { ...state.vacationPlan.budget, amount: budget },
+      },
+    }));
+  },
+  setBudgetSpendingPriority: (spendingPriority: SpendingPriority) => {
+    set((state) => ({
+      vacationPlan: {
+        ...state.vacationPlan,
+        budget: {
+          ...state.vacationPlan.budget,
+          spendingPriority: spendingPriority,
+        },
+      },
+    }));
+  },
+  setBudgetIsFlexible: (isFlexible: boolean) => {
+    set((state) => ({
+      vacationPlan: {
+        ...state.vacationPlan,
+        budget: {
+          ...state.vacationPlan.budget,
+          isFlexible: isFlexible,
+        },
+      },
     }));
   },
   setAccommodationType: (accommodationType: AccommodationType) => {

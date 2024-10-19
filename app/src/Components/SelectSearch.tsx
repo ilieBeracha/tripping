@@ -37,7 +37,9 @@ export default function SelectSearch({
     >
       <div className="relative mt-2">
         <ComboboxInput
-          className={inputStyle}
+          className={
+            "form-select w-full py-3 px-4 bg-white border border-gray-300 rounded-lg text-gray-700 focus:ring-main-orange focus:border-main-orange transition-all"
+          }
           onChange={(event) => {
             setQuery(event.target.value);
             if (event.target.value === "") {
@@ -48,7 +50,7 @@ export default function SelectSearch({
           displayValue={(elem: any) => elem}
           placeholder={placeholder}
         />
-        <ComboboxButton className="absolute focus:ring-0 inset-y-0 right-0 pr-2 bg-transparent flex items-center justify-center">
+        <ComboboxButton className="absolute focus:ring-0 inset-y-0 right-0 pr-2 bg-transparent flex items-center justify-center ">
           <ChevronUpDownIcon
             className="h-5 w-5 text-gray-400"
             aria-hidden="true"

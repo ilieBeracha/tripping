@@ -21,7 +21,7 @@ export default function VacationPlanForm() {
     "Destination",
     "Accommodations",
     "Dates",
-    "General Info",
+    "Budget",
     "Summary",
   ];
 
