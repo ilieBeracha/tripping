@@ -1,4 +1,4 @@
-import { BorderBeam } from "./ui/border-beam";
+// import { BorderBeam } from "./ui/border-beam";
 
 export default function VacationPlanChoiceStep({
   setChoiceStep,
@@ -37,7 +37,7 @@ function Card({
 }) {
   return (
     <div className="relative flex flex-col my-6  border border-slate-200 rounded-lg p-8 shadow-lg transition-all duration-300">
-      <BorderBeam />
+      {/* <BorderBeam /> */}
 
       <div className="flex items-center mb-4">
         <svg

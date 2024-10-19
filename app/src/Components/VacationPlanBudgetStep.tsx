@@ -1,7 +1,6 @@
 import { useStore } from "zustand";
 import { vacationPlanStore } from "../stores/VacationPlanStore";
 import { useState } from "react";
-import CalenderRange from "./CalenderRange";
 
 export default function VacationPlanBudgetStep() {
   const useVacationPlanStore = useStore(vacationPlanStore);
@@ -23,13 +22,6 @@ export default function VacationPlanBudgetStep() {
 
   return (
     <div className="space-y-8 p-8 rounded-xl">
-      <h2 className="text-2xl font-bold text-sec-blue">
-        {" "}
-        Choose Your Travel Dates
-      </h2>
-
-      <CalenderRange />
-
       <h2 className="text-2xl font-bold text-sec-blue"> Choose Your Budget</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

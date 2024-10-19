@@ -4,11 +4,12 @@ import VacationPlanStepper from "./VacationPlanStepper";
 import VacationPlanChoiceStep from "./VacationPlanChoiceStep"; // New step component
 import VacationPlanDestinationStep from "./VacationPlanDestinationStep";
 import VacationPlanAccommodationsStep from "./VacationPlanAccommodationsStep";
-import VacationPlanGeneralInfoStep from "./VacationPlanGeneralInfoStep";
+import VacationPlanBudgetStep from "./VacationPlanBudgetStep";
 import VacationPlanSummaryStep from "./VacationPlanSummaryStep";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import { useStore } from "zustand";
 import { vacationPlanStore } from "../stores/VacationPlanStore";
+import VacationPlanDatesStep from "./VacationPlanDatesStep";
 
 export default function VacationPlanForm() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -19,11 +20,13 @@ export default function VacationPlanForm() {
     "Choice",
     "Destination",
     "Accommodations",
+    "Dates",
     "General Info",
     "Summary",
   ];
 
   const handleNext = () => {
+    console.log();
     if (
       currentStep === 2 &&
       !store.vacationPlan.vacationType &&
@@ -84,8 +87,9 @@ export default function VacationPlanForm() {
                 <VacationPlanDestinationStep choiceStep={choiceStep} />
               )}
               {currentStep === 3 && <VacationPlanAccommodationsStep />}
-              {currentStep === 4 && <VacationPlanGeneralInfoStep />}
-              {currentStep === 5 && <VacationPlanSummaryStep />}
+              {currentStep === 4 && <VacationPlanDatesStep />}
+              {currentStep === 5 && <VacationPlanBudgetStep />}
+              {currentStep === 6 && <VacationPlanSummaryStep />}
             </motion.div>
           </AnimatePresence>
         </div>

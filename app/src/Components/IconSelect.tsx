@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { BorderBeam } from "./ui/border-beam";
+// import { BorderBeam } from "./ui/border-beam";
 
 export default function IconSelect({
   typeList,
@@ -24,7 +24,7 @@ export default function IconSelect({
           whileTap={{ scale: 0.95 }}
         >
           <div className="flex flex-col items-center space-y-2">
-            <BorderBeam />
+            {/* <BorderBeam /> */}
 
             <element.icon
               className={`w-12 h-12 ${

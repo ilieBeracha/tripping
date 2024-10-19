@@ -37,14 +37,25 @@ export interface Accommodation {
   accommodationType: AccommodationType;
   hotelType: HotelType;
 }
-export interface Dates {
-  startDate: Date;
-  endDate: Date;
+
+export interface DateFlexibility {
+  isFlexible: boolean;
+  flexibilityType: "dateRange" | "totallyFlexible" | null;
+  optimizationType: "bestDeal" | "lowestPrice" | null;
+  preferredTotalDays: number | null;
 }
+
+export interface Dates {
+  startDate: Date | null;
+  endDate: Date | null;
+  flexibility: DateFlexibility;
+}
+
 export interface Destination {
   country: string;
   city: string;
 }
+
 export default interface VacationPlan {
   destination: Destination;
   dates: Dates;

@@ -7,7 +7,6 @@ import {
   Hotel,
   Palmtree,
   DollarSign,
-  AreaChart,
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
@@ -23,38 +22,6 @@ export default function VacationPlanSummaryStep() {
     console.log(vacationPlan);
   });
 
-  const accommodationTypeDisplay = () => {
-    switch (vacationPlan.accommodation.accommodationType) {
-      case "family":
-        return "Family";
-      case "friends":
-        return "Friends";
-      case "couple":
-        return "Couple";
-      case "solo":
-        return "Solo";
-      default:
-        return "Not specified";
-    }
-  };
-
-  const hotelTypeDisplay = () => {
-    switch (vacationPlan.accommodation.hotelType) {
-      case "luxury":
-        return "Luxury";
-      case "boutique":
-        return "Boutique";
-      case "resort":
-        return "Resort";
-      case "standard":
-        return "Standard";
-      case "camping":
-        return "Camping";
-      default:
-        return "Not specified";
-    }
-  };
-
   const toggleCard = (card: string) => {
     setExpandedCard(expandedCard === card ? null : card);
   };
@@ -67,11 +34,7 @@ export default function VacationPlanSummaryStep() {
     isExpanded = false,
     children,
   }: any) => (
-    <div
-      className={`bg-white rounded-lg shadow-md p-6 flex flex-col space-y-4 transition-all duration-300 hover:shadow-lg ${
-        isExpanded ? "pb-6" : "pb-4"
-      }`}
-    >
+    <div className="relative bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl p-6 transition-all duration-300 hover:shadow-xl">
       <div
         className="flex items-center justify-between cursor-pointer"
         onClick={() => isExpandable && toggleCard(title)}
@@ -79,63 +42,83 @@ export default function VacationPlanSummaryStep() {
         <div className="flex items-center space-x-4">
           <Icon className="w-8 h-8 text-main-orange" />
           <div>
-            <h3 className="text-lg font-semibold text-gray-700">{title}</h3>
-            <p className="text-xl text-sec-blue">{value || "Not specified"}</p>
+            <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
+            <p className="text-lg text-gray-600">{value || "Not specified"}</p>
           </div>
         </div>
         {isExpandable && (
           <div>
             {isExpanded ? (
-              <ChevronUp className="w-6 h-6" />
+              <ChevronUp className="w-6 h-6 text-gray-600" />
             ) : (
-              <ChevronDown className="w-6 h-6" />
+              <ChevronDown className="w-6 h-6 text-gray-600" />
             )}
           </div>
         )}
       </div>
-      {isExpanded && <div className="pt-4">{children}</div>}
+
+      {/* Expandable content */}
+      {isExpanded && (
+        <div className="absolute top-full left-0 mt-2 w-full bg-white p-4 rounded-lg shadow-lg z-10">
+          {children}
+        </div>
+      )}
     </div>
   );
 
   return (
-    <div className="space-y-8 p-8 rounded-xl">
+    <div className="space-y-8 p-8 rounded-3xl">
       <div className="text-center">
-        <h2 className="text-4xl font-bold text-sec-blue mb-2">
+        <h2 className="text-4xl font-bold text-sec-blue mb-4">
           Your Vacation Summary
         </h2>
-        <p className="text-gray-600 text-lg">
+        <p className="text-gray-500 text-lg">
           Here's an overview of your dream getaway
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Vacation Type or Country */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative">
+        {/* Destination */}
         <SummaryCard
-          icon={vacationPlan.vacationType ? Palmtree : MapPin}
-          title={vacationPlan.vacationType ? "Vacation Type" : "Destination"}
-          value={vacationPlan.vacationType || vacationPlan.destination.country}
-          isExpandable={!!vacationPlan.destination.city}
+          icon={MapPin}
+          title="Destination"
+          value={`${vacationPlan.destination.country || ""}`}
+          isExpandable={true}
           isExpanded={expandedCard === "Destination"}
         >
-          {/* Expandable content for Destination */}
-          <p className="text-lg text-gray-800">
-            <strong>City:</strong>{" "}
-            {vacationPlan.destination.city || "Not specified"}
-          </p>
+          {vacationPlan.vacationType === "" ? (
+            <>
+              <p className="text-md text-gray-500">
+                <strong>Country:</strong>{" "}
+                {vacationPlan.destination.country || "Not specified"}
+              </p>
+              <p className="text-md text-gray-500">
+                <strong>City:</strong>{" "}
+                {vacationPlan.destination.city || "Not specified"}
+              </p>
+            </>
+          ) : (
+            <p className="text-md text-gray-500">
+              <strong>Vacation Type:</strong>{" "}
+              {vacationPlan.vacationType || "Not specified"}
+            </p>
+          )}
         </SummaryCard>
 
-        {/* Accommodation Type */}
+        {/* Accommodation */}
         <SummaryCard
           icon={Home}
           title="Accommodation Type"
-          value={accommodationTypeDisplay()}
+          value={
+            vacationPlan.accommodation.accommodationType || "Not specified"
+          }
         />
 
         {/* Hotel Type */}
         <SummaryCard
           icon={Hotel}
           title="Hotel Type"
-          value={hotelTypeDisplay()}
+          value={vacationPlan.accommodation.hotelType || "Not specified"}
         />
 
         {/* Budget */}
@@ -149,21 +132,54 @@ export default function VacationPlanSummaryStep() {
           }`}
         />
 
-        {/* Travel Dates */}
+        {/* Dates */}
         <SummaryCard
           icon={Calendar}
-          title="Travel Dates"
+          title="Dates"
           value={`${new Date(
-            vacationPlan.dates.startDate
+            vacationPlan.dates.startDate as Date
           ).toDateString()} - ${new Date(
-            vacationPlan.dates.endDate
+            vacationPlan.dates.endDate as Date
           ).toDateString()}`}
-          fullWidth={true}
-        />
+          isExpandable={true}
+          isExpanded={expandedCard === "Dates"}
+        >
+          <p className="text-md text-gray-500">
+            <strong>Start Date:</strong>{" "}
+            {new Date(vacationPlan.dates.startDate as Date).toDateString()}
+          </p>
+          <p className="text-md text-gray-500">
+            <strong>End Date:</strong>{" "}
+            {new Date(vacationPlan.dates.endDate as Date).toDateString()}
+          </p>
+        </SummaryCard>
+
+        {/* Flexibility */}
+        <SummaryCard
+          icon={Calendar}
+          title="Flexibility"
+          value={vacationPlan.dates.flexibility.isFlexible ? "Yes" : "No"}
+          isExpandable={true}
+          isExpanded={expandedCard === "Flexibility"}
+        >
+          <p className="text-md text-gray-500">
+            <strong>Flexibility Type:</strong>{" "}
+            {vacationPlan.dates.flexibility.flexibilityType || "Not specified"}
+          </p>
+          <p className="text-md text-gray-500">
+            <strong>Optimization Type:</strong>{" "}
+            {vacationPlan.dates.flexibility.optimizationType || "Not specified"}
+          </p>
+          <p className="text-md text-gray-500">
+            <strong>Preferred Total Days:</strong>{" "}
+            {vacationPlan.dates.flexibility.preferredTotalDays ||
+              "Not specified"}
+          </p>
+        </SummaryCard>
       </div>
 
       <div className="mt-8 text-center">
-        <p className="text-gray-600 italic">
+        <p className="text-gray-500 italic">
           "The world is a book, and those who do not travel read only one page."
           - Saint Augustine
         </p>

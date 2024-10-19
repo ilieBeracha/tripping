@@ -1,8 +1,6 @@
 import { create } from "zustand";
 import VacationPlan, {
   AccommodationType,
-  Dates,
-  Destination,
   HotelType,
 } from "../types/vacationPlan";
 
@@ -10,7 +8,15 @@ interface VacationPlanStore {
   vacationPlan: VacationPlan;
   setCountry: (country: string) => void;
   setCity: (city: string) => void;
-  setDates: (newDateRange: Dates) => void;
+  setDateRange: (dateRange: { startDate: Date; endDate: Date }) => void;
+  setIsFlexible: (isFlexible: boolean) => void;
+  setFlexibilityType: (
+    flexibilityType: "dateRange" | "totallyFlexible" | null
+  ) => void;
+  setOptimizationType: (
+    optimizationType: "bestDeal" | "lowestPrice" | null
+  ) => void;
+  setPreferredTotalDays: (preferredTotalDays: number | null) => void;
   setBudget: (budget: number) => void;
   setAccommodationType: (accommodationType: AccommodationType) => void;
   setVacationType: (vacationType: string) => void;
@@ -28,6 +34,12 @@ export const vacationPlanStore = create<VacationPlanStore>((set) => ({
     dates: {
       startDate: new Date(),
       endDate: new Date(),
+      flexibility: {
+        isFlexible: false,
+        flexibilityType: null,
+        optimizationType: null,
+        preferredTotalDays: null,
+      },
     },
     accommodation: {
       accommodationType: AccommodationType.Family,
@@ -67,13 +79,83 @@ export const vacationPlanStore = create<VacationPlanStore>((set) => ({
       vacationPlan: { ...state.vacationPlan, vacationType },
     }));
   },
-  setDates: (newDateRange: Dates) => {
-    const { startDate, endDate } = newDateRange;
-
+  setIsFlexible: (isFlexible: boolean) => {
     set((state) => ({
-      vacationPlan: { ...state.vacationPlan, dates: { startDate, endDate } },
+      vacationPlan: {
+        ...state.vacationPlan,
+        dates: {
+          ...state.vacationPlan.dates,
+          flexibility: {
+            ...state.vacationPlan.dates.flexibility,
+            isFlexible,
+          },
+        },
+      },
     }));
   },
+
+  setFlexibilityType: (
+    flexibilityType: "dateRange" | "totallyFlexible" | null
+  ) => {
+    set((state) => ({
+      vacationPlan: {
+        ...state.vacationPlan,
+        dates: {
+          ...state.vacationPlan.dates,
+          flexibility: {
+            ...state.vacationPlan.dates.flexibility,
+            flexibilityType,
+          },
+        },
+      },
+    }));
+  },
+
+  setOptimizationType: (
+    optimizationType: "bestDeal" | "lowestPrice" | null
+  ) => {
+    set((state) => ({
+      vacationPlan: {
+        ...state.vacationPlan,
+        dates: {
+          ...state.vacationPlan.dates,
+          flexibility: {
+            ...state.vacationPlan.dates.flexibility,
+            optimizationType,
+          },
+        },
+      },
+    }));
+  },
+
+  setPreferredTotalDays: (preferredTotalDays: number | null) => {
+    set((state) => ({
+      vacationPlan: {
+        ...state.vacationPlan,
+        dates: {
+          ...state.vacationPlan.dates,
+          flexibility: {
+            ...state.vacationPlan.dates.flexibility,
+            preferredTotalDays,
+          },
+        },
+      },
+    }));
+  },
+
+  setDateRange: (dateRange: { startDate: Date; endDate: Date }) => {
+    set((state) => ({
+      vacationPlan: {
+        ...state.vacationPlan,
+        dates: {
+          ...state.vacationPlan.dates,
+          startDate: dateRange.startDate,
+          endDate: dateRange.endDate,
+        },
+      },
+    }));
+  },
+
   setBudget: (budget: number) => {
     set((state) => ({
       vacationPlan: { ...state.vacationPlan, budget },
