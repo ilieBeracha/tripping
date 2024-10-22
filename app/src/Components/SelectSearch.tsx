@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Combobox,
   ComboboxInput,
@@ -7,50 +6,63 @@ import {
   ComboboxOption,
 } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import { countryList } from "../config/countriesList";
+import { useState } from "react";
 
-export default function SelectSearch({ inputStyle, onSelect }: any) {
+export default function SelectSearch({
+  list,
+  inputStyle,
+  onSelect,
+  selectedElem,
+  setSelectedElem,
+  placeholder,
+}: any) {
   const [query, setQuery] = useState("");
-  const [selectedCountry, setSelectedCountry] = useState("");
 
-  const filteredCountries =
+  const filteredList =
     query === ""
-      ? countryList
-      : countryList.filter((country) =>
-          country.toLowerCase().includes(query.toLowerCase())
+      ? list
+      : list.filter((elem: string) =>
+          elem.toLowerCase().includes(query.toLowerCase())
         );
 
   return (
     <Combobox
       as="div"
-      value={selectedCountry}
-      onChange={(country) => {
-        setSelectedCountry(country as string);
-        onSelect(country);
+      value={selectedElem}
+      onChange={(elem) => {
+        setSelectedElem(elem as string);
+        onSelect(elem);
         setQuery("");
       }}
     >
       <div className="relative mt-2">
         <ComboboxInput
-          className={inputStyle}
-          onChange={(event) => setQuery(event.target.value)}
-          onBlur={() => setQuery("")}
-          displayValue={(country: any) => country}
-          placeholder="Enter destination"
+          className={
+            "form-select w-full py-3 px-4 bg-white border border-gray-300 rounded-lg text-gray-700 focus:ring-main-orange focus:border-main-orange transition-all"
+          }
+          onChange={(event) => {
+            setQuery(event.target.value);
+            if (event.target.value === "") {
+              setSelectedElem("");
+              onSelect("");
+            }
+          }}
+          displayValue={(elem: any) => elem}
+          placeholder={placeholder}
         />
-        <ComboboxButton className="absolute focus:ring-0 inset-y-0 right-0  pr-2 bg-transparent flex items-center justify-center">
+        <ComboboxButton className="absolute focus:ring-0 inset-y-0 right-0 pr-2 bg-transparent flex items-center justify-center ">
           <ChevronUpDownIcon
             className="h-5 w-5 text-gray-400"
             aria-hidden="true"
           />
         </ComboboxButton>
 
-        {filteredCountries.length > 0 && (
+        {filteredList.length > 0 && (
           <ComboboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            {filteredCountries.map((country) => (
+            {filteredList.map((elem: string) => (
               <ComboboxOption
-                key={country}
-                value={country}
+                key={elem}
+                value={elem}
                 className={({ active }) =>
                   `relative cursor-default select-none py-2 pl-3 pr-9 ${
                     active ? "bg-main-orange text-white" : "text-gray-900"
@@ -64,7 +76,7 @@ export default function SelectSearch({ inputStyle, onSelect }: any) {
                         selected ? "font-medium" : "font-normal"
                       }`}
                     >
-                      {country}
+                      {elem}
                     </span>
                     {selected ? (
                       <span

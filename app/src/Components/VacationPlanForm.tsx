@@ -3,13 +3,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import VacationPlanStepper from "./VacationPlanStepper";
 import VacationPlanChoiceStep from "./VacationPlanChoiceStep"; // New step component
 import VacationPlanDestinationStep from "./VacationPlanDestinationStep";
-import VacationPlanDatesStep from "./VacationPlanDatesStep";
 import VacationPlanAccommodationsStep from "./VacationPlanAccommodationsStep";
 import VacationPlanBudgetStep from "./VacationPlanBudgetStep";
 import VacationPlanSummaryStep from "./VacationPlanSummaryStep";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import { useStore } from "zustand";
 import { vacationPlanStore } from "../stores/VacationPlanStore";
+import VacationPlanDatesStep from "./VacationPlanDatesStep";
 
 export default function VacationPlanForm() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -26,10 +26,11 @@ export default function VacationPlanForm() {
   ];
 
   const handleNext = () => {
+    console.log();
     if (
       currentStep === 2 &&
       !store.vacationPlan.vacationType &&
-      !store.vacationPlan.destination
+      !store.vacationPlan.destination.country
     ) {
       return;
     }
@@ -60,13 +61,13 @@ export default function VacationPlanForm() {
 
   return (
     <div
-      className="w-full mx-auto flex flex-col h-full text-[90%]"
-      style={{ maxWidth: "100%", minHeight: "65vh" }}
+      className="w-full mx-auto flex flex-col h-full  justify-between text-[90%]"
+      style={{ maxWidth: "100%", minHeight: "50vh" }}
     >
       <VacationPlanStepper steps={steps} currentStep={currentStep} />
-      <div className="flex flex-col flex-grow">
+      <div className="flex flex-col flex-grow justify-between">
         <div
-          className="bg-white px-10 rounded-lg flex flex-col flex-grow"
+          className="bg-white px-10 rounded-lg flex "
           style={{ height: "calc(100% - 4rem)" }}
         >
           <AnimatePresence mode="wait">
@@ -93,9 +94,9 @@ export default function VacationPlanForm() {
           </AnimatePresence>
         </div>
         {currentStep !== 1 && (
-          <div className="flex justify-between mt-4 h-16">
+          <div className="flex justify-between mt-4 p-4">
             <motion.button
-              className={`py-3 px-8 rounded-lg text-white bg-sec-blue ${
+              className={` rounded-lg text-white bg-sec-blue ${
                 currentStep === 1 ? "opacity-50 cursor-not-allowed" : ""
               }`}
               onClick={handlePrevious}
@@ -107,7 +108,7 @@ export default function VacationPlanForm() {
               Previous
             </motion.button>
             <motion.button
-              className="py-1 px-4 text-sm rounded-lg text-white bg-main-orange hover:bg-orange-600 transition-colors"
+              className=" text-sm rounded-lg text-white bg-main-orange hover:bg-orange-600 transition-colors"
               onClick={handleNext}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

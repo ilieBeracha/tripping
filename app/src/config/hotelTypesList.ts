@@ -13,7 +13,7 @@ import {
   Castle as CountryHouse,
   TreeDeciduous as Park,
   Home as Villa,
-  Warehouse as FarmIcon, // Alternative for 'Barn'
+  Warehouse as FarmIcon,
 } from "lucide-react";
 import { HotelType } from "../types/vacationPlan";
 

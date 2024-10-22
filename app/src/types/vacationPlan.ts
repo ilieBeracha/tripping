@@ -11,7 +11,8 @@ export enum VacationTypes {
   Tropical = "tropical",
   City = "city",
   Cruise = "cruise",
-  Winter = "winter",
+  Adventure = "adventure",
+  Extreme = "extreme",
 }
 
 export enum HotelType {
@@ -37,12 +38,43 @@ export interface Accommodation {
   hotelType: HotelType;
 }
 
+export interface DateFlexibility {
+  isFlexible: boolean;
+  flexibilityType: "dateRange" | "totallyFlexible" | null;
+  optimizationType: "bestDeal" | "lowestPrice" | null;
+  preferredTotalDays: number | null;
+}
+
+export interface Dates {
+  startDate: Date | null;
+  endDate: Date | null;
+  flexibility: DateFlexibility;
+}
+
+export interface Destination {
+  country: string;
+  city: string;
+}
+
+export interface Budget {
+  amount: number; // The selected budget amount
+  isFlexible: boolean; // Indicates if the user is flexible on the budget
+  spendingPriority: SpendingPriority | null; // The user's spending priority
+}
+
+export enum SpendingPriority {
+  Accommodation = "accommodation",
+  Food = "food",
+  Activities = "activities",
+  Transportation = "transportation",
+  Shopping = "shopping",
+}
+
 export default interface VacationPlan {
-  destination: string;
-  startDate: string;
-  endDate: string;
+  destination: Destination;
+  dates: Dates;
   vacationType: string;
-  budget: number;
+  budget: Budget;
   accommodation: Accommodation;
   activities: string[];
 }

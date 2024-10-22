@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import HomeHero from "../components/HomeHero";
 import VacationPlanForm from "../components/VacationPlanForm";
 import { motion, AnimatePresence } from "framer-motion";
+import Globe from "../components/ui/globe";
 
 export default function Home() {
   const [isShowVacationPlan, setIsShowVacationPlan] = useState(false);
@@ -16,9 +17,13 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center relative">
+    <div
+      className="flex flex-col justify-center items-center relative"
+      style={{ height: "100vh", width: "100vw", overflow: "hidden" }}
+    >
       <Header />
       <HomeHero startVacationPlan={startVacationPlan} />
+      <Globe />
 
       <AnimatePresence>
         {isShowVacationPlan && (
@@ -31,12 +36,12 @@ export default function Home() {
             <div className="absolute inset-0" onClick={closeVacationPlan} />
 
             <motion.div
-              className="relative bg-white px-10 pb-10 pt-8 rounded-2xl shadow-lg z-50"
+              className="relative bg-white px-10 pb-6 pt-8 rounded-[5px] shadow-lg z-50"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 50 }}
               transition={{ duration: 0.3 }}
-              style={{ width: "70vw", height: "80vh" }}
+              style={{ width: "70vw", minHeight: "10vh" }}
             >
               <VacationPlanForm />
             </motion.div>

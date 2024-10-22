@@ -1,16 +1,18 @@
 import { useStore } from "zustand";
+import { useState } from "react";
 import { vacationPlanStore } from "../stores/VacationPlanStore";
 import {
   Sun,
-  Mountain,
   Palmtree,
   Building,
   Sailboat,
-  Snowflake,
+  Mountain,
+  Bike,
 } from "lucide-react";
 import IconSelect from "./IconSelect";
 import { VacationTypes } from "../types/vacationPlan";
 import SelectSearch from "./SelectSearch";
+import { cityVacationTypes } from "../config/countriesList";
 
 export default function VacationPlanDestinationStep({
   choiceStep,
@@ -18,14 +20,16 @@ export default function VacationPlanDestinationStep({
   choiceStep: number;
 }) {
   const useVacationPlanStore = useStore(vacationPlanStore);
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
 
   const vacationTypes = [
     { type: VacationTypes.Beach, icon: Sun },
-    { type: VacationTypes.Mountain, icon: Mountain },
     { type: VacationTypes.Tropical, icon: Palmtree },
     { type: VacationTypes.City, icon: Building },
     { type: VacationTypes.Cruise, icon: Sailboat },
-    { type: VacationTypes.Winter, icon: Snowflake },
+    { type: VacationTypes.Mountain, icon: Mountain },
+    { type: VacationTypes.Extreme, icon: Bike },
   ];
 
   function handleVacationType(type: string) {
@@ -33,7 +37,10 @@ export default function VacationPlanDestinationStep({
       type = "";
     }
     useVacationPlanStore.setVacationType(type);
-    useVacationPlanStore.setDestination("");
+    useVacationPlanStore.setCountry("");
+    useVacationPlanStore.setCity("");
+    setSelectedCountry("");
+    setSelectedCity("");
   }
 
   const inputStyle =
@@ -45,21 +52,41 @@ export default function VacationPlanDestinationStep({
     <div className="space-y-8 p-8 rounded-xl">
       {choiceStep === 1 ? (
         <div className="w-full flex flex-col gap-6">
-          <h2 className="text-2xl font-extrabold text-sec-blue mb-8 text-center">
+          <h2 className="text-2xl font-bold text-sec-blue">
             Specific Destination
           </h2>
           <SelectSearch
+            list={Object.keys(cityVacationTypes)}
             inputStyle={inputStyle}
-            onSelect={(country: any) =>
-              useVacationPlanStore.setDestination(country)
-            }
-          />{" "}
+            onSelect={(country: any) => {
+              useVacationPlanStore.setCountry(country);
+              useVacationPlanStore.setCity("");
+              setSelectedCountry(country);
+              setSelectedCity("");
+            }}
+            selectedElem={selectedCountry}
+            setSelectedElem={setSelectedCountry}
+            placeholder="Enter country"
+          />
+          {selectedCountry !== "" && (
+            <SelectSearch
+              list={cityVacationTypes[selectedCountry]?.map(
+                (cityInfo: any) => cityInfo.city
+              )}
+              inputStyle={inputStyle}
+              onSelect={(city: any) => {
+                useVacationPlanStore.setCity(city);
+                setSelectedCity(city);
+              }}
+              selectedElem={selectedCity}
+              setSelectedElem={setSelectedCity}
+              placeholder="Enter city"
+            />
+          )}
         </div>
       ) : (
-        <div>
-          <label className="block text-md font-medium text-gray-700">
-            Vacation Type
-          </label>
+        <div className="space-y-8 rounded-xl">
+          <h2 className="text-2xl font-bold text-sec-blue"> Vacation Type</h2>
           <IconSelect
             typeList={vacationTypes}
             selectedType={useVacationPlanStore.vacationPlan.vacationType}

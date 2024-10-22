@@ -1,123 +1,125 @@
+import { useState } from "react";
 import { useStore } from "zustand";
 import { vacationPlanStore } from "../stores/VacationPlanStore";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { parseISO, format, isBefore, isAfter, isToday } from "date-fns";
-import { useState } from "react";
+import CalenderRange from "./CalenderRange";
+import { Calendar } from "lucide-react";
 
 export default function VacationPlanDatesStep() {
   const useVacationPlanStore = useStore(vacationPlanStore);
-  const vacationPlan = useVacationPlanStore.vacationPlan;
 
-  const [error, setError] = useState("");
+  const [isFlexible, setIsFlexible] = useState(false);
+  const [flexibilityType, setFlexibilityType] = useState<string | null>(null);
+  const [preferredTotalDays, setPreferredTotalDays] = useState<number>(0);
 
-  const formatDate = (date: Date | null) => {
-    return date ? format(date, "yyyy-MM-dd") : "";
+  const handleFlexibilityChange = (e: any) => {
+    const flexible = e.target.value === "yes";
+    setIsFlexible(flexible);
+
+    if (!flexible) {
+      setFlexibilityType(null);
+      setPreferredTotalDays(0);
+    }
+
+    useVacationPlanStore.setDatesIsFlexible(flexible);
   };
 
-  const isValidDateSelection = (
-    startDate: Date | null,
-    endDate: Date | null
-  ) => {
-    const today = new Date();
-
-    if (startDate && isBefore(startDate, today) && !isToday(startDate)) {
-      return "Start date cannot be in the past.";
-    }
-
-    if (endDate && isBefore(endDate, today) && !isToday(endDate)) {
-      return "End date cannot be in the past.";
-    }
-
-    if (startDate && endDate && isAfter(startDate, endDate)) {
-      return "End date cannot be before the start date.";
-    }
-
-    return "";
+  const handleFlexibilityTypeChange = (e: any) => {
+    const selectedType = e.target.value;
+    setFlexibilityType(selectedType);
+    useVacationPlanStore.setDatesFlexibilityType(selectedType);
   };
 
-  const handleStartDateChange = (date: Date | null) => {
-    const formattedStartDate = formatDate(date);
-    const validationError = isValidDateSelection(
-      date,
-      vacationPlan.endDate ? parseISO(vacationPlan.endDate) : null
-    );
-
-    if (validationError) {
-      setError(validationError);
-    } else {
-      setError("");
-      useVacationPlanStore.setDates(formattedStartDate, vacationPlan.endDate);
-    }
-  };
-
-  const handleEndDateChange = (date: Date | null) => {
-    const formattedEndDate = formatDate(date);
-    const validationError = isValidDateSelection(
-      vacationPlan.startDate ? parseISO(vacationPlan.startDate) : null,
-      date
-    );
-
-    if (validationError) {
-      setError(validationError);
-    } else {
-      setError("");
-      useVacationPlanStore.setDates(vacationPlan.startDate, formattedEndDate);
-    }
+  const handlePreferredTotalDaysChange = (e: any) => {
+    const days = parseInt(e.target.value);
+    setPreferredTotalDays(days);
+    useVacationPlanStore.setDatesPreferredTotalDays(days);
   };
 
   return (
-    <div className="space-y-8 p-8 rounded-xl">
-      <h2 className="text-2xl font-extrabold text-sec-blue mb-8 text-center">
-        Choose Your Travel Dates
+    <div className="space-y-8 p-8 rounded-xl bg-white text-black">
+      <h2 className="text-2xl font-bold text-sec-blue flex items-center">
+        <Calendar className="mr-2" /> Choose Your Travel Dates
       </h2>
 
-      {error && (
-        <div className="text-red-500 text-center font-semibold mb-4">
-          {error}
-        </div>
-      )}
-
-      <div className="flex justify-center space-x-12 items-start">
-        <div className="flex flex-col items-center">
-          <label className="block text-xl font-semibold text-gray-800 mb-4">
-            Start Date
-          </label>
-          <div className="bg-white p-6 shadow-xl rounded-lg transition-transform transform hover:scale-105">
-            <DatePicker
-              selected={
-                vacationPlan.startDate ? parseISO(vacationPlan.startDate) : null
-              }
-              onChange={handleStartDateChange}
-              minDate={new Date()}
-              inline
-              calendarClassName="custom-datepicker"
-              dateFormat="yyyy-MM-dd"
-            />
+      <div className="space-y-4">
+        <div>
+          <p className="mb-2">Are your travel dates flexible?</p>
+          <div className="space-x-4">
+            <div className="inline-flex items-center">
+              <input
+                name="flexibility"
+                onChange={handleFlexibilityChange}
+                checked={isFlexible}
+                type="radio"
+                value="yes"
+                className="h-4 w-4 border-gray-300 text-main-orange focus:ring-main-orange"
+              />
+              <label className="ml-3 block text-sm font-medium leading-6 text-gray-900 checked:bg-black">
+                Yes
+              </label>
+            </div>
+            <div className="inline-flex items-center">
+              <input
+                type="radio"
+                name="flexibility"
+                value="no"
+                checked={!isFlexible}
+                onChange={handleFlexibilityChange}
+                className="h-4 w-4 border-gray-300 text-main-orange focus:ring-main-orange"
+              />
+              <label className="ml-3 block text-sm font-medium leading-6 text-gray-900">
+                No
+              </label>
+            </div>
           </div>
         </div>
 
-        <div className="flex flex-col items-center">
-          <label className="block text-xl font-semibold text-gray-800 mb-4">
-            End Date
-          </label>
-          <div className="bg-white p-6 shadow-xl rounded-lg transition-transform transform hover:scale-105">
-            <DatePicker
-              selected={
-                vacationPlan.endDate ? parseISO(vacationPlan.endDate) : null
-              }
-              onChange={handleEndDateChange}
-              minDate={
-                vacationPlan.startDate
-                  ? parseISO(vacationPlan.startDate)
-                  : new Date()
-              }
-              inline
-              calendarClassName="custom-datepicker"
-              dateFormat="yyyy-MM-dd"
-            />
+        {/* Flexibility Type */}
+        {isFlexible && (
+          <div className="space-y-4">
+            <div>
+              <p className="mb-2">What type of flexibility do you prefer?</p>
+              <select
+                value={flexibilityType || ""}
+                onChange={handleFlexibilityTypeChange}
+                className="form-select w-full py-3 px-4 bg-white border border-gray-300 rounded-lg text-gray-700 focus:ring-main-orange focus:border-main-orange transition-all"
+              >
+                <option value="">Select an option</option>
+                <option value="dateRange">Flexible within a date range</option>
+                <option value="totallyFlexible">Totally flexible</option>
+              </select>
+            </div>
+
+            {/* Date Range Flexibility */}
+            {flexibilityType === "dateRange" && (
+              <div className="space-y-4">
+                <p>Please select your preferred date range:</p>
+                <CalenderRange />
+
+                <div>
+                  <p className="mb-2">
+                    What's your preferred total number of days?
+                  </p>
+                  <input
+                    type="number"
+                    value={preferredTotalDays}
+                    onChange={handlePreferredTotalDaysChange}
+                    className="form-input w-full"
+                    min="1"
+                  />
+                </div>
+              </div>
+            )}
           </div>
-        </div>
+        )}
+
+        {/* Specific Date Selection */}
+        {!isFlexible && (
+          <div>
+            <p>Please select your specific travel dates:</p>
+            <CalenderRange />
+          </div>
+        )}
       </div>
     </div>
   );
